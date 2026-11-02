@@ -1,0 +1,2 @@
+n_stations,r_days_gee_vs_pc,gee_days_median,pc_days_median,k_events_per_onset,r_onsets_events,n_station_seasons,conus_R_s1_median,conus_events_median,conus_capture_s1_median,conus_missed_median,conus_capture_comb_median,conus_gain_median,crop_cells,crop_missed_median,crop_gain_median,frac_cells_R_gt_5
+121,0.8963777932524122,36.0,32.0,0.7490468714958511,0.8222308323614796,227,5.631578947368421,14.606413994169097,0.39035212285708953,8.540756242930572,0.8472320562245261,6.267655107323964,18702,11.611551534961324,8.804182410936416,0.5373536706646377

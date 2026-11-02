@@ -1,0 +1,21 @@
+# Never publish: course materials (incl. the Earthdata token file), old work, credentials
+References/
+archive/
+Annoucement.txt
+**/NASAEarthDataToken.txt
+.netrc
+_netrc
+
+# Too large for GitHub; re-created by the extraction scripts (01-07, 14, 23)
+data/raw/
+data/processed/uscrn_hourly.pkl
+data/processed/s1_cache/
+data/processed/nisar_cache/
+
+# Python and Office scratch files
+__pycache__/
+*.pyc
+~$*
+
+# Internal team preparation (Q&A prep, guide, submission drafts): not published
+notes/

@@ -1,0 +1,7 @@
+sensor,revisit_d,capture,same_revisit_all_weather
+"Daily optical, Terra + Aqua (best case)",0.5,0.5646706586826348,
+"Morning optical, 1-day",1.0,0.47005988023952094,0.8625748502994012
+"Morning optical, 2-day",2.0,0.32867814371257487,0.7220299401197604
+"Morning optical, 3-day",3.0,0.24801796407185633,0.5977050898203593
+"Morning optical, 5-day",5.0,0.16358083832335327,0.42791916167664673
+"Morning optical, 8-day",8.0,0.10598952095808382,0.28527994011976043

@@ -1,0 +1,43 @@
+station-granule pairs: 3469 unique granules: 2673
+0/2673 granules
+100/2673 granules
+200/2673 granules
+300/2673 granules
+400/2673 granules
+500/2673 granules
+600/2673 granules
+700/2673 granules
+800/2673 granules
+900/2673 granules
+1000/2673 granules
+1100/2673 granules
+1200/2673 granules
+1300/2673 granules
+1400/2673 granules
+1500/2673 granules
+1600/2673 granules
+1700/2673 granules
+1800/2673 granules
+1900/2673 granules
+2000/2673 granules
+2100/2673 granules
+2200/2673 granules
+2300/2673 granules
+2400/2673 granules
+2500/2673 granules
+2600/2673 granules
+                     count unique  ...        75%        max
+wban                3466.0    NaN  ...    63868.0    94996.0
+granule               3466   2673  ...        NaN        NaN
+time                  3466   2605  ...        NaN        NaN
+sm_center           3132.0    NaN  ...   0.259137   0.419242
+flag_center         3449.0    NaN  ...       14.0       15.0
+recommended_center    3449      2  ...        NaN        NaN
+sm_3x3_rec          2257.0    NaN  ...   0.231156      0.393
+sm_3x3_all          3194.0    NaN  ...   0.259236   0.416374
+n_rec               3449.0    NaN  ...        9.0        9.0
+hh_db               3189.0    NaN  ...  -8.427706  33.779866
+hv_db                789.0    NaN  ... -14.147126  -0.209874
+error                   17      5  ...        NaN        NaN
+
+[12 rows x 11 columns]
