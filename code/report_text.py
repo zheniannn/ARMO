@@ -648,8 +648,8 @@ def write(doc, V):
         "products/hourly02/). Sentinel-1: Microsoft Planetary Computer STAC collections `sentinel-1-grd` and "
         "`sentinel-1-rtc`. NISAR: NASA CMR collections NISAR_L2_GCOV_*_V1 and NISAR_L3_SME2_PROVISIONAL_V1 via ASF "
         "(Earthdata login). SMAP SPL3SMP_E V006, MODIS MOD13Q1 V6.1, ESA WorldCover v200 and USDA CDL 2025: Google "
-        "Earth Engine (scripts 14–17, 23; gridMET IDAHO_EPSCOR/GRIDMET, COPERNICUS/S1_GRD, MODIS/061/MCD12Q1). ERA5-Land: Open-Meteo archive API. Repository: [public GitHub link to be added before "
-        "submission].", size=9.5)
+        "Earth Engine (scripts 14–17, 23; gridMET IDAHO_EPSCOR/GRIDMET, COPERNICUS/S1_GRD, MODIS/061/MCD12Q1). ERA5-Land: Open-Meteo archive API. Repository: https://github.com/zheniannn/ARMO "
+        "(MIT licence).", size=9.5)
     doc.h1("Individual Contribution Statements (half a page each)")
     doc.para("[Each team member writes their own half-page statement here: scripts, analyses, figures and report "
              "sections produced, a brief reflection on their role and what they would do differently.]", size=9.5)
