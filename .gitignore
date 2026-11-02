@@ -17,3 +17,6 @@ __pycache__/
 
 # Assignment deliverables, their generators and internal team notes (Q&A prep, guide, checklist): local only
 Assignment (Do Not Push)/
+
+# Local full-project backup (contains data and course files): never published
+Recovery Point/

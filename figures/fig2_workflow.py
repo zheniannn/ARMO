@@ -44,7 +44,7 @@ box(52, 12.5, 24, 10.5, "O3  Observability", "S1 Δσ° vs ΔSM; NISAR SME2\nvs 
 box(52, 1, 24, 10, "Uncertainty", "station-cluster bootstrap;\n2025 vs 2026 holdout;\nthreshold sensitivity", ANA, fs.AQUA)
 
 box(81, 22, 18, 24, "O4  Requirement\n& marginal value", "revisit for ≥ 80 %\ncapture; ARMO added\nto real 2026 fleet and\nto future fleet\n(+ ROSE-L)", OUT, fs.ORANGE)
-box(81, 1, 18, 18, "Decision", "fund ARMO?\nYES / CONDITIONAL\n/ NO against\npre-declared criteria", OUT, fs.ORANGE)
+box(81, 1, 18, 18, "Decision", "CONDITIONAL:\nfund Stage 1 now;\nStage 2 only if\ngo/no-go gates pass", OUT, fs.ORANGE)
 
 for y in (40.5, 28, 16, 5):
     arrow(20.6, y, 24.6, 36 if y > 30 else (12 if y < 20 else 30))

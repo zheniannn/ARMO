@@ -72,7 +72,8 @@ a.legend(loc="center right", fontsize=7.2)
 a.set_title(f"{len(evs):,} wetting events, 120 stations", loc="left", fontsize=9)
 fs.panel_label(a, "a")
 
-for wn, col, lab in [("half-amplitude", fs.BLUE, "Regular revisit (half-amplitude)"), ("abs0.03", fs.AQUA, "Regular revisit (≥ 0.03 m³/m³)")]:
+for wn, col, lab in [("half-amplitude", fs.BLUE, "Ideal regular sampler on measured windows (half-amplitude)"),
+                     ("abs0.03", fs.AQUA, "Ideal regular sampler (≥ 0.03 m³/m³ windows)")]:
     c = cap[cap.window == wn]
     b.fill_between(c.R, c.ci_lo * 100, c.ci_hi * 100, color=col, alpha=0.18, lw=0)
     b.plot(c.R, c.capture * 100, color=col, marker="o", ms=4, label=lab)
@@ -119,7 +120,8 @@ ax.set_title("Marginal value of a dedicated revisit mission (ARMO) on top of the
              "(979 events, 17 Jun–31 Oct 2026)", loc="left", fontsize=9)
 ax.grid(axis="x", visible=False)
 fig.text(0.01, -0.07, "Current fleet = actual Sentinel-1C/1D + NISAR looks. †Future fleet adds ROSE-L at ESA's documented two-satellite "
-         "revisit over global land (6 days; 3 days is Europe only); launch ≥ 2030 (WMO OSCAR).\nARMO = regular dawn/dusk revisit added at "
-         "random phase. Error bars = 95 % station-bootstrap CI. Dotted line = 80 % capture target.", fontsize=6.8, color=fs.INK2)
+         "revisit over global land (6 days; 3 days is Europe only); launch ~2030 or later (uncertain).\nARMO bars = IDEALISED regular dawn/dusk "
+         "revisit added at random phase (SIMULATED), not the orbit-modelled design D (see paired-gain figure). Error bars = 95 % station-bootstrap CI "
+         "of each bar, not of the gain. Dotted line = 80 % capture target.", fontsize=6.8, color=fs.INK2)
 fig.savefig(os.path.join(FIG, "fig6_marginal_value.png"))
 print(mv.round(3))

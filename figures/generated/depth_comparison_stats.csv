@@ -1,0 +1,13 @@
+quantity,value,ci_lo,ci_hi,note
+events at 5 cm,3340.0,,,
+events at 10 cm,2531.0,,,
+paired storms (both depths),2433.0,,,
+stations in paired set,117.0,,,
+"median window 5 cm, all events (d)",1.7916666666666667,,,
+"median window 10 cm, all events (d)",1.875,,,
+paired median of (10 cm - 5 cm) window (d),0.0,0.0,0.08333333333333304,
+paired: share of storms lasting longer at 10 cm,0.49815043156596794,,,
+paired capture at 1-day revisit: 5 cm / 10 cm / diff pp,0.5548705302096177,-1.176952081808964,2.415622545869921,0.861 / 0.867
+paired capture at 2-day revisit: 5 cm / 10 cm / diff pp,0.9042334566378957,-1.4158071569385298,3.383018544046268,0.723 / 0.732
+paired capture at 3-day revisit: 5 cm / 10 cm / diff pp,1.5070557610631596,-0.7209760830302069,3.85644267029822,0.600 / 0.615
+paired capture at 6-day revisit: 5 cm / 10 cm / diff pp,2.0276750239758874,0.23170568592332444,3.9911159223073644,0.374 / 0.394

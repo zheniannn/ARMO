@@ -63,7 +63,7 @@ norm = BoundaryNorm(bounds, cm.N, extend="both")
 ext = [X0, X0 + NX * DX, Y0 - NY * DX, Y0]
 bar_deg = 500 / (111.32 * np.cos(np.deg2rad(37.0)))
 for k, (arr, title) in enumerate([(R_s1, f"a  Sentinel-1, real 2026 (median {med(R_s1):.1f} d)"),
-                                  (R_armo, f"b  ARMO design D, simulated (median {med(R_armo):.1f} d)"),
+                                  (R_armo, f"b  ARMO (2 satellites), simulated (median {med(R_armo):.1f} d)"),
                                   (R_comb, f"c  Sentinel-1 + ARMO (median {med(R_comb):.1f} d)")]):
     ax = fig.add_axes([0.005 + k * 0.315, 0.04, W, H])
     im = ax.imshow(arr, extent=ext, origin="upper", cmap=cm, norm=norm, interpolation="nearest")
@@ -79,5 +79,9 @@ for k, (arr, title) in enumerate([(R_s1, f"a  Sentinel-1, real 2026 (median {med
     ax.set_title(title, fontsize=8.4, loc="left", pad=2)
 cax = fig.add_axes([0.955, 0.12, 0.009, H - 0.16])
 cb = fig.colorbar(im, cax=cax, ticks=bounds); cb.ax.set_yticklabels([f"{b:g}" for b in bounds]); cb.ax.tick_params(labelsize=6.5); cb.set_label("mean revisit (days)", fontsize=7)
+fig.text(0.005, -0.03, "Caveat (added 3 Nov 2026): these are ACCESS opportunities, not imaged coverage or event capture. ARMO assumes the whole 25–45° "
+         "access corridor is imaged on every pass (one orbital phase, 0.5° grid, repeated to 0.1°); panel c combines mean rates (1/R = 1/R_S1 + 1/R_ARMO), "
+         "not acquisition times.\nEvent-level capture uses real acquisition times (fig_capture_gain_paired_ci); a narrower usable strip lowers it sharply "
+         "(fig_swath_capture_sensitivity).", fontsize=6.2, color=fs.INK2)
 out = os.path.join(FIG, "fig_armo_coverage.png")
 fig.savefig(out, dpi=250, bbox_inches="tight", pad_inches=0.03); print("saved", out)

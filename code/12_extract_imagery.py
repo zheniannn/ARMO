@@ -26,11 +26,25 @@ from rasterio.windows import from_bounds
 from pyproj import Transformer
 from common import PROC
 
-LON, LAT = -97.09, 36.12                       # USCRN OK_Stillwater_2_W (WBAN 53926)
+import sys
+
+# Extra wetting cases (added 3 Nov 2026), chosen from s1_pairs.csv as strong same-orbit 2026 pairs with a large probe rise:
+#   oakley    KS_Oakley_19_SSW (3067): 4 -> 16 Aug 2026, descending orbit 85, probe +0.255 m3/m3, +5.5 dB (grassland, farm region)
+#   champaign IL_Champaign_9_SW (54808): 4 -> 16 Sep 2026, ascending orbit 19, probe +0.115 m3/m3, +5.2 dB (cropland, near harvest)
+# Run: python 12_extract_imagery.py oakley | champaign   (Sentinel-1 pair + gridMET rain only; no SMAP / NISAR subsets)
+SITES = {
+    "stillwater": dict(lon=-97.09, lat=36.12, orbit=34, s1=["2026-08-13", "2026-08-25"], rain=("2026-08-13", "2026-08-25")),
+    "oakley": dict(lon=-100.96, lat=38.87, orbit=85, s1=["2026-08-04", "2026-08-16"], rain=("2026-08-04", "2026-08-16")),
+    "champaign": dict(lon=-88.37, lat=40.05, orbit=19, s1=["2026-09-04", "2026-09-16"], rain=("2026-09-04", "2026-09-17")),
+}
+SITE = sys.argv[1] if len(sys.argv) > 1 else "stillwater"
+CFG = SITES[SITE]
+LON, LAT = CFG["lon"], CFG["lat"]              # default: USCRN OK_Stillwater_2_W (WBAN 53926)
 OUT = os.path.join(PROC, "imagery")
 os.makedirs(OUT, exist_ok=True)
-S1_DATES = ["2026-08-13", "2026-08-25"]
-REL_ORBIT = 34
+S1_DATES = CFG["s1"]
+REL_ORBIT = CFG["orbit"]
+PREFIX = "" if SITE == "stillwater" else SITE + "_"   # Stillwater keeps its original file names
 NISAR_GRANULE = "NISAR_L3_PR_SME2_028_142_D_070_4005_DHDH_A_20260823T012505_20260823T012540_P05023_N_F_J_001"
 GDAL_ENV = dict(GDAL_DISABLE_READDIR_ON_OPEN="EMPTY_DIR", GDAL_HTTP_MULTIRANGE="YES",
                 CPL_VSIL_CURL_ALLOWED_EXTENSIONS=".tif,.tiff", GDAL_HTTP_MAX_RETRY="4", GDAL_HTTP_RETRY_DELAY="2")
@@ -79,10 +93,12 @@ def ee_grid(img, half_km, scale_deg, band):
 
 
 def gridmet_rain():
-    f = os.path.join(OUT, "gridmet_rain_20260813_20260824.npz")
+    r0, r1 = CFG["rain"]
+    last = (np.datetime64(r1) - np.timedelta64(1, "D")).astype(str)
+    f = os.path.join(OUT, f"{PREFIX}gridmet_rain_{r0.replace('-', '')}_{last.replace('-', '')}.npz")
     if os.path.exists(f):
         return
-    img = ee.ImageCollection("IDAHO_EPSCOR/GRIDMET").filterDate("2026-08-13", "2026-08-25").select("pr").sum()
+    img = ee.ImageCollection("IDAHO_EPSCOR/GRIDMET").filterDate(r0, r1).select("pr").sum()
     a, ext = ee_grid(img, 30, 0.01, "pr")
     np.savez_compressed(f, rain_mm=a, extent=np.array(ext))
     print("saved gridMET rain", a.shape, np.nanmax(a))
@@ -124,8 +140,9 @@ def nisar():
 
 if __name__ == "__main__":
     for d in S1_DATES:
-        s1_vv(d, 30, 40, f"s1_vv_{d.replace('-', '')}_60km_40m.npz")
-    s1_vv("2026-08-25", 12, 10, "s1_vv_20260825_24km_10m.npz")
+        s1_vv(d, 30, 40, f"{PREFIX}s1_vv_{d.replace('-', '')}_60km_40m.npz")
     gridmet_rain()
-    smap()
-    nisar()
+    if SITE == "stillwater":                 # slide-only extras for the original case
+        s1_vv("2026-08-25", 12, 10, "s1_vv_20260825_24km_10m.npz")
+        smap()
+        nisar()

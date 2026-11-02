@@ -1,0 +1,11 @@
+r_rain_dvv             0.727767
+n_cells             3140.000000
+dvv_rain_lt30         -0.355522
+dvv_rain_30_60         0.292875
+dvv_rain_ge60          0.841253
+station_dvv_110m       1.035374
+sm_before              0.122000
+sm_after               0.258000
+sm_peak                0.322000
+rain_station_mm       83.700000
+saved C:\Users\Ian\Music\ES4304 Final Project\figures\fig_sar_wetting_event.png

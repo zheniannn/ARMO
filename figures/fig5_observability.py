@@ -64,27 +64,31 @@ b.set_title("Detection falls with vegetation", loc="left", fontsize=8.5)
 fs.panel_label(b, "b")
 
 # (c) detection chain (horizontal bars)
-p_s1, p_ni = real.loc["Sentinel-1 (NISAR era)", "capture"], real.loc["NISAR (NISAR era)", "capture"]
-rows = [("S1 look in window", p_s1, fs.ORANGE),
-        ("S1 detects if sampled", sm["P_detect_given_sampled_1sigma"], fs.ORANGE),
-        ("S1 end-to-end", p_s1 * sm["P_detect_given_sampled_1sigma"], fs.ORANGE),
-        ("NISAR look in window", p_ni, fs.VIOLET),
-        ("SME2 detects if valid retrieval", nis["P_detect_sat_valid_1sigma"], LILAC),
-        ("SME2 end-to-end", p_ni * nis["P_detect_sat_1sigma"], LILAC),
-        ("SMAP look in window", smap["capture_era"], fs.MAGENTA),
-        ("SMAP detects if sampled", smap["P_detect_1sigma"], fs.MAGENTA),
-        ("SMAP end-to-end", smap["end_to_end_era"], fs.MAGENTA),
-        ("ERA5-Land POD", era.loc[0.02, "POD"], fs.AQUA), ("ERA5-Land false alarms", era.loc[0.02, "FAR"], fs.AQUA)]
+# matched-cohort chain (same 979 NISAR-era events for every row; figures/fig_quality_attrition.py). Revised 3 Nov 2026:
+# the earlier "end-to-end" bars multiplied rates from different cohorts and overstated what the same events achieve.
+import pandas as pd
+qa = pd.read_csv(os.path.join(FIG, "generated", "quality_attrition_stats.csv"))
+q = lambda sensor, stage: qa[(qa.sensor == sensor) & (qa.stage.str.startswith(stage))].value.iloc[0]
+rows = [("S1 look in window", q("S1 VV", "Real look"), fs.ORANGE),
+        ("S1 detected change (same events)", q("S1 VV", "Change"), fs.ORANGE),
+        ("NISAR look in window", q("NISAR HH", "Real look"), fs.VIOLET),
+        ("NISAR HH detected (same events)", q("NISAR HH", "Change"), fs.VIOLET),
+        ("SME2 detected (same events)", q("NISAR SME2", "Change"), LILAC),
+        ("Any radar detected (same events)", q("Field-scale radar fleet (S1 VV or NISAR HH or SME2)", "detected"), fs.INK2),
+        ("SMAP any-quality look", q("SMAP all quality", "Real look"), fs.MAGENTA),
+        ("SMAP any-quality detected", q("SMAP all quality", "Change"), fs.MAGENTA),
+        ("SMAP recommended detected", q("SMAP recommended", "Change"), fs.MAGENTA),
+        ("ERA5-Land POD", era.loc[0.02, "POD"], fs.AQUA), ("ERA5-Land false-alarm ratio", era.loc[0.02, "FAR"], fs.AQUA)]
 y = np.arange(len(rows))[::-1]
 for yi, (lab, v, col) in zip(y, rows):
-    e2e = "end-to-end" in lab
+    e2e = "detected" in lab
     c.barh(yi, v * 100, color=col, height=0.62, hatch="////" if e2e else None,
            edgecolor="white" if e2e else col, alpha=0.5 if "false" in lab else 1)
     c.text(v * 100 + 2, yi, f"{v * 100:.0f}%", va="center", fontsize=6.5)
 c.set_yticks(y); c.set_yticklabels([r[0] for r in rows], fontsize=6.3)
-c.set_xlim(0, 100); c.set_xlabel("Percent of events (NISAR era)")
+c.set_xlim(0, 100); c.set_xlabel("% of 979 matched events (ERA5: all events)")
 c.grid(axis="y", visible=False)
-c.set_title("Event detection chain", loc="left", fontsize=8.5)
+c.set_title("Same 979 events: look vs detected change", loc="left", fontsize=8.2)
 fs.panel_label(c, "c")
 
 # (d) requirement curve: calibrated detection model vs noise (soil-moisture units)
@@ -104,7 +108,7 @@ d.set_xticks([0.01, 0.02, 0.04, 0.1, 0.2]); d.set_xticklabels(["0.01", "0.02", "
 d.xaxis.set_minor_formatter(plt.NullFormatter())
 d.set_xlabel("Change noise, soil-moisture equivalent (m³/m³)"); d.set_ylabel("Sampled events detected (%)")
 d.legend(fontsize=5.8, loc="lower left", handlelength=1, frameon=True, framealpha=0.95, edgecolor="none")
-d.set_title("What noise would detect 70 %?", loc="left", fontsize=8.5)
+d.set_title("MODEL-BASED: noise for 70 % detection", loc="left", fontsize=8.2)
 fs.panel_label(d, "d")
 fig.savefig(os.path.join(FIG, "fig5_observability.png"))
 print("ok")

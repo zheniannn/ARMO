@@ -1,0 +1,37 @@
+panel                                              sensor                                            stage    n  denominator  value  ci_lo  ci_hi                             cohort
+    a                                               S1 VV                              Real look in window  296          979 0.3023 0.2621 0.3436 979 NISAR-era events, 107 stations
+    a                                               S1 VV                        Valid same- geometry pair  174          979 0.1777 0.1475 0.2120 979 NISAR-era events, 107 stations
+    a                                               S1 VV                          Valid retrieval in pair  174          979 0.1777 0.1475 0.2120 979 NISAR-era events, 107 stations
+    a                                               S1 VV                   Change > 1σ of no-change noise   60          979 0.0613 0.0437 0.0821 979 NISAR-era events, 107 stations
+    a                                               S1 VV valid pair WITHOUT a catalogue look (non-nested)    1          174    NaN    NaN    NaN                                NaN
+    a                                            NISAR HH                              Real look in window  371          979 0.3790 0.3402 0.4137 979 NISAR-era events, 107 stations
+    a                                            NISAR HH                        Valid same- geometry pair  240          979 0.2451 0.2111 0.2751 979 NISAR-era events, 107 stations
+    a                                            NISAR HH                          Valid retrieval in pair  216          979 0.2206 0.1896 0.2520 979 NISAR-era events, 107 stations
+    a                                            NISAR HH                   Change > 1σ of no-change noise   49          979 0.0501 0.0337 0.0682 979 NISAR-era events, 107 stations
+    a                                            NISAR HH valid pair WITHOUT a catalogue look (non-nested)    4          240    NaN    NaN    NaN                                NaN
+    a                                          NISAR SME2                              Real look in window  371          979 0.3790 0.3402 0.4137 979 NISAR-era events, 107 stations
+    a                                          NISAR SME2                        Valid same- geometry pair  240          979 0.2451 0.2111 0.2751 979 NISAR-era events, 107 stations
+    a                                          NISAR SME2                          Valid retrieval in pair  139          979 0.1420 0.1143 0.1712 979 NISAR-era events, 107 stations
+    a                                          NISAR SME2                   Change > 1σ of no-change noise   51          979 0.0521 0.0368 0.0673 979 NISAR-era events, 107 stations
+    a                                          NISAR SME2 valid pair WITHOUT a catalogue look (non-nested)    4          240    NaN    NaN    NaN                                NaN
+    a                                    SMAP all quality                              Real look in window  750          979 0.7661 0.7108 0.8164 979 NISAR-era events, 107 stations
+    a                                    SMAP all quality                        Valid same- geometry pair  647          979 0.6609 0.6059 0.7137 979 NISAR-era events, 107 stations
+    a                                    SMAP all quality                          Valid retrieval in pair  647          979 0.6609 0.6059 0.7137 979 NISAR-era events, 107 stations
+    a                                    SMAP all quality                   Change > 1σ of no-change noise  334          979 0.3412 0.2992 0.3811 979 NISAR-era events, 107 stations
+    a                                    SMAP all quality valid pair WITHOUT a catalogue look (non-nested)    8          647    NaN    NaN    NaN                                NaN
+    a                                    SMAP recommended                              Real look in window  261          979 0.2666 0.1960 0.3405 979 NISAR-era events, 107 stations
+    a                                    SMAP recommended                        Valid same- geometry pair  221          979 0.2257 0.1617 0.2931 979 NISAR-era events, 107 stations
+    a                                    SMAP recommended                          Valid retrieval in pair  221          979 0.2257 0.1617 0.2931 979 NISAR-era events, 107 stations
+    a                                    SMAP recommended                   Change > 1σ of no-change noise  142          979 0.1450 0.1024 0.1897 979 NISAR-era events, 107 stations
+    a                                    SMAP recommended valid pair WITHOUT a catalogue look (non-nested)    4          221    NaN    NaN    NaN                                NaN
+    a Field-scale radar fleet (S1 VV or NISAR HH or SME2)                          detected change (union)  111          979 0.1134 0.0903 0.1398 979 NISAR-era events, 107 stations
+    b                                               S1 VV       detected | sampled (published denominator)  206          624 0.3301 0.2759 0.3853            2025–2026; 115 stations
+    b                                            NISAR HH       detected | sampled (published denominator)   49          216 0.2269 0.1623 0.3000                  2026; 90 stations
+    b                                          NISAR SME2       detected | sampled (published denominator)   51          139 0.3669 0.2866 0.4539                  2026; 68 stations
+    b                                    SMAP all quality       detected | sampled (published denominator) 1174         2200 0.5336 0.5007 0.5650            2025–2026; 114 stations
+    b                                    SMAP recommended       detected | sampled (published denominator)  453          693 0.6537 0.6127 0.6932             2025–2026; 56 stations
+    c                                               S1 VV                     false alarm | unchanged pair  210         2376 0.0884 0.0704 0.1059  all unchanged same-geometry pairs
+    c                                            NISAR HH                     false alarm | unchanged pair   20          511 0.0391 0.0215 0.0594  all unchanged same-geometry pairs
+    c                                          NISAR SME2                     false alarm | unchanged pair   32          372 0.0860 0.0512 0.1256  all unchanged same-geometry pairs
+    c                                    SMAP all quality                     false alarm | unchanged pair 2211        27190 0.0813 0.0689 0.0961  all unchanged same-geometry pairs
+    c                                    SMAP recommended                     false alarm | unchanged pair 1169        13527 0.0864 0.0762 0.0970  all unchanged same-geometry pairs

@@ -1,0 +1,10 @@
+Stillwater events 11 captured 5 S1 looks 11 NISAR looks 29
+                        scenario  capture  ci_lo  ci_hi
+0  Current fleet (S1C/D + NISAR)    0.516  0.474  0.561
+1     Current fleet + ARMO 4-day    0.688  0.650  0.727
+2     Current fleet + ARMO 3-day    0.731  0.694  0.771
+3     Current fleet + ARMO 2-day    0.797  0.761  0.834
+4     Current fleet + ARMO 1-day    0.889  0.859  0.917
+5   Future fleet (+ROSE-L 6-day)    0.637  0.599  0.677
+6      Future fleet + ARMO 3-day    0.766  0.731  0.804
+7      Future fleet + ARMO 2-day    0.816  0.782  0.852

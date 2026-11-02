@@ -419,7 +419,137 @@ def sizing():
     print(pd.Series(siz).round(3).to_string()); print(mass.round(1).to_string()); print(cost.round(2).to_string())
 
 
+# ====================================================================================================
+# event_flags (optional; added 3 Nov 2026 for the evidence figures; does not change the outputs above)
+# ====================================================================================================
+
+def broadside_passes(t, r, v, lat, lon, rev):
+    """Every closest approach (< 2,500 km) of one orbit to one station: time (s), off-nadir angle (deg), side, revolution.
+    Same geometry as accesses(); the design filters (angle range, side) are applied afterwards."""
+    la, lo = np.deg2rad(lat), np.deg2rad(lon)
+    st = RE * np.array([np.cos(la) * np.cos(lo), np.cos(la) * np.sin(lo), np.sin(la)])
+    d = np.linalg.norm(r - st, axis=1)
+    m = (d[1:-1] < d[:-2]) & (d[1:-1] <= d[2:]) & (d[1:-1] < 2500)
+    idx = np.flatnonzero(m) + 1
+    los = st - r[idx]
+    nad = -r[idx] / np.linalg.norm(r[idx], axis=1)[:, None]
+    eta = np.rad2deg(np.arccos(np.sum(los * nad, 1) / np.linalg.norm(los, axis=1)))
+    side = np.where(np.sum(los * np.cross(v[idx], r[idx]), 1) > 0, "R", "L")
+    return t[idx], eta, side, rev[idx]
+
+
+DESIGNS = {"A": (25, 45, "R", 1), "B": (25, 45, "ALT", 1), "C": (20, 50, "ALT", 1), "D": (25, 45, "R", 2), "E": (25, 45, "ALT", 2)}
+SWATH_KM = (50, 100, 200, 250, 300)
+
+
+def event_flags():
+    """Per-event, per-orbital-phase ARMO look flags on the matched 979-event cohort, for paired statistics, plus a
+    usable-swath sensitivity for design D.
+
+    Geometry, phases and the capture rule are identical to orbit_designs()/head_to_head(): each of the 8 initial
+    phases u0 flies satellite 1 at u0 and (designs D, E) satellite 2 at u0 + pi. A pass "looks" at a station when
+    the station is on an allowed side within the design's off-nadir range at closest approach.
+    Swath sensitivity (design D, HYPOTHETICAL): the 25-45 deg off-nadir range is an ACCESS corridor (~362 km of ground
+    range). A real SAR images only a strip of usable width W inside it on each pass. Two deterministic tasking rules:
+      fixed  - one strip of width W centred in the corridor on every pass (no tasking);
+      cycled - ceil(362/W) overlapping strips whose centres are evenly spaced so together they just span the corridor;
+               each satellite steps to the next strip every revolution (station-agnostic tasking).
+    A station is imaged only if its ground-range offset lies inside the active strip. W = 362 km equals the baseline.
+    This is a feasibility envelope, not a demonstrated imaging mode.
+    Outputs: data/processed/armo_event_capture_by_phase.csv, armo_swath_event_capture.csv, armo_swath_gaps.csv"""
+    st = pd.read_csv(os.path.join(PROC, "station_seasons.csv"))
+    st = st[st.included & (st.season == 2026)].drop_duplicates("wban")[["wban", "lat", "lon"]]
+    ev = pd.read_csv(os.path.join(PROC, "events.csv"), parse_dates=["t_start", "t_ws", "t_we"])
+    ev = ev[(ev.t_start >= ERA[0]) & (ev.t_start < ERA[1])].reset_index(drop=True)
+    ws, we = to_hours(ev.t_ws), to_hours(ev.t_we)
+    s1 = pd.read_csv(os.path.join(PROC, "acq_s1.csv"), parse_dates=["time"])
+    ni = pd.read_csv(os.path.join(PROC, "acq_nisar.csv"), parse_dates=["time"])
+    fleet = {w: np.sort(to_hours(pd.concat([s1[s1.wban == w].time, ni[ni.wban == w].time]))) for w in st.wban}
+    t0h = to_hours(pd.DatetimeIndex([T0]))[0]
+    e0, e1 = to_hours(pd.DatetimeIndex(list(ERA)))
+    groups = {w: ev.index.get_indexer(ix) for w, ix in ev.groupby("wban").groups.items()}
+
+    def flags(times_by_w, with_fleet):
+        out = np.zeros(len(ev), bool)
+        for w, i in groups.items():
+            obs = times_by_w.get(w, np.array([]))
+            if with_fleet:
+                obs = np.concatenate([fleet.get(w, np.array([])), obs])
+            obs = np.sort(obs)
+            out[i] = captured(obs, ws[i], we[i]) if obs.size else False
+        return out
+
+    base = flags({}, True)                    # real fleet only (ARMO times empty)
+    phases = np.linspace(0, 2 * np.pi, 8, endpoint=False)
+    a_km = RE + 620
+    g_lo, g_hi = ground_range_km(25, a_km), ground_range_km(45, a_km)
+    rows, srows, grows = [], [], []
+    for k, u0 in enumerate(phases):
+        passes = {}                            # (sat, wban) -> (t_h, eta, side, rev)
+        for s in (0, 1):
+            t, r, v, inc, a, rev = orbit(620, 18.0, u0 + s * np.pi)
+            for row in st.itertuples():
+                tt, eta, side, rv = broadside_passes(t, r, v, row.lat, row.lon, rev)
+                passes[(s, row.wban)] = (t0h + tt / 3600, eta, side, rv)
+        for name, (lo, hi, sides, nsat) in DESIGNS.items():
+            tb = {}
+            for w in st.wban:
+                keep = []
+                for s in range(nsat):
+                    tt, eta, side, rv = passes[(s, w)]
+                    ok = (eta >= lo) & (eta <= hi)
+                    ok &= (side == np.where(rv % 2 == 0, "R", "L")) if sides == "ALT" else np.isin(side, list(sides))
+                    keep.append(tt[ok])
+                tb[w] = np.sort(np.concatenate(keep))
+            alone, comb = flags(tb, False), flags(tb, True)
+            rows.append(pd.DataFrame(dict(wban=ev.wban, t_ws=ev.t_ws, design=name, phase=k, fleet_look=base,
+                                          armo_look=alone, combined_look=comb)))
+        # usable-swath sensitivity, design D
+        for W in SWATH_KM + (362,):
+            for mode in ("fixed", "cycled"):
+                if W == 362 and mode == "cycled":
+                    continue
+                nstrip = int(np.ceil((g_hi - g_lo) / W - 1e-9))
+                tb = {}
+                for w in st.wban:
+                    keep = []
+                    for s in range(2):
+                        tt, eta, side, rv = passes[(s, w)]
+                        ok = (eta >= 25) & (eta <= 45) & (side == "R")
+                        g = ground_range_km(eta, a_km)
+                        if W < 362:
+                            if mode == "fixed":
+                                c = (g_lo + g_hi) / 2
+                                ok &= (g >= c - W / 2) & (g <= c + W / 2)
+                            else:   # nstrip overlapping strips, centres evenly spaced so the strips just span the corridor
+                                j = (rv + s) % nstrip
+                                cj = np.linspace(g_lo + W / 2, g_hi - W / 2, nstrip)[j]
+                                ok &= (g >= cj - W / 2) & (g <= cj + W / 2)
+                        keep.append(tt[ok])
+                    tb[w] = np.sort(np.concatenate(keep))
+                lab = "baseline 362 km (whole access corridor)" if W == 362 else f"{W} km {mode}"
+                srows.append(pd.DataFrame(dict(wban=ev.wban, t_ws=ev.t_ws, swath_km=W, mode="baseline" if W == 362 else mode,
+                                               scenario=lab, phase=k, fleet_look=base, armo_look=flags(tb, False),
+                                               combined_look=flags(tb, True))))
+                for w, x in tb.items():
+                    x = x[(x >= e0) & (x < e1)]
+                    d = np.diff(np.r_[e0, x, e1]) / 24 if len(x) else np.array([(e1 - e0) / 24])
+                    d = d[d > 0.25]
+                    grows.append(dict(scenario=lab, swath_km=W, mode="baseline" if W == 362 else mode, phase=k, wban=w,
+                                      n_looks=len(x), gaps_d=";".join(f"{g_:.4f}" for g_ in d)))
+        print("phase", k, "done", flush=True)
+    out = pd.concat(rows, ignore_index=True)
+    out.to_csv(os.path.join(PROC, "armo_event_capture_by_phase.csv"), index=False)
+    pd.concat(srows, ignore_index=True).to_csv(os.path.join(PROC, "armo_swath_event_capture.csv"), index=False)
+    pd.DataFrame(grows).to_csv(os.path.join(PROC, "armo_swath_gaps.csv"), index=False)
+    print(out.groupby("design")[["fleet_look", "armo_look", "combined_look"]].mean().round(4).to_string())
+
+
 if __name__ == "__main__":
-    orbit_designs()
-    performance()
-    sizing()
+    import sys
+    if len(sys.argv) > 1 and sys.argv[1] == "event_flags":
+        event_flags()          # optional: python 06_mission_design.py event_flags
+    else:
+        orbit_designs()
+        performance()
+        sizing()

@@ -1,0 +1,37 @@
+anchor,expected,recomputed,tolerance,status,source
+"events, all",3340.0,3340.0,0.0,MATCH,events_real.csv
+event stations,120.0,120.0,0.0,MATCH,events_real.csv
+event key unique (duplicates),0.0,0.0,0.0,MATCH,"events_real.csv (wban, t_ws)"
+NISAR-era cohort events,979.0,979.0,0.0,MATCH,"events_real.csv, storm start 17 Jun-31 Oct 2026"
+NISAR-era cohort stations,107.0,107.0,0.0,MATCH,events_real.csv
+S1 capture %,30.2,30.2349,0.05,MATCH,cap_Sentinel-1 (NISAR era)
+NISAR capture %,37.9,37.8958,0.05,MATCH,cap_NISAR (NISAR era)
+fleet capture %,51.6,51.5832,0.05,MATCH,S1 or NISAR look
+stored combined column agrees with S1|NISAR (mismatches),0.0,0.0,0.0,MATCH,events_real.csv
+partition: neither,474.0,474.0,0.0,MATCH,events_real.csv
+partition: S1 only,134.0,134.0,0.0,MATCH,events_real.csv
+partition: NISAR only,209.0,209.0,0.0,MATCH,events_real.csv
+partition: both,162.0,162.0,0.0,MATCH,events_real.csv
+missed events with amp >= 0.09,212.0,212.0,0.0,MATCH,events_real.csv amp
+duration <1 d: n,257.0,257.0,0.0,MATCH,window_h
+duration <1 d: fleet capture %,16.3,16.3424,0.05,MATCH,window_h
+duration 1-2 d: n,266.0,266.0,0.0,MATCH,window_h
+duration 1-2 d: fleet capture %,50.8,50.7519,0.05,MATCH,window_h
+duration 2-3 d: n,185.0,185.0,0.0,MATCH,window_h
+duration 2-3 d: fleet capture %,61.1,61.0811,0.05,MATCH,window_h
+duration 3-5 d: n,162.0,162.0,0.0,MATCH,window_h
+duration 3-5 d: fleet capture %,75.3,75.3086,0.05,MATCH,window_h
+duration >=5 d: n,109.0,109.0,0.0,MATCH,window_h
+duration >=5 d: fleet capture %,85.3,85.3211,0.05,MATCH,window_h
+R for 80 % capture (d),1.46,1.461,0.005,MATCH,capture_synthetic.csv
+R80 lower (d),1.31,1.3053,0.006,MATCH,capture_synthetic.csv
+R80 upper (d),1.64,1.6364,0.006,MATCH,capture_synthetic.csv
+design D mean gap (d),1.416,1.4164,0.001,MATCH,armo_designs.csv
+design D fleet + ARMO %,81.5,81.4862,0.05,MATCH,armo_designs.csv
+design D gain (pp),29.9,29.903,0.05,MATCH,armo_designs.csv
+ARMO alone %,76.1,76.0725,0.05,MATCH,performance_headtohead.csv
+head-to-head fleet + ARMO % (= design D),81.5,81.4862,0.05,MATCH,performance_headtohead.csv
+SMAP all-quality era capture %,76.6,76.6088,0.05,MATCH,smap_summary.csv
+SMAP recommended-quality era capture %,26.7,26.6599,0.05,MATCH,smap_summary.csv
+smap_capture.csv era mean = recommended capture % (per-event table is the recommended subset),26.7,26.6599,0.05,MATCH,smap_capture.csv
+mission cost US$ M,149.8,149.7634,0.05,MATCH,armo_sizing.csv

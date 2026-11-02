@@ -113,6 +113,33 @@ python figures/fig_armo_coverage.py      # simulates ARMO's revisit on a 0.5° g
 python figures/fig_detection_matrix.py
 ```
 
+**Evidence figures and checks (offline, from `data/processed` only; added 3 Nov 2026).** These recompute the headline
+numbers, add paired and held-out uncertainty, and test the engineering assumptions. Run from the repository root:
+
+```bash
+python code/06_mission_design.py event_flags     # per-event ARMO look flags by design and orbital phase + usable-swath scenarios (about 10 min)
+cd figures
+python reproduce_anchors.py                      # recomputes the anchor numbers -> generated/anchor_check.csv
+python fig_event_capture_severity.py             # which real events are missed
+python fig_quality_attrition.py                  # look -> valid pair -> detected change, same 979 events
+python fig_capture_gain_paired_ci.py             # paired gain from simulated ARMO, station and orbital-phase uncertainty
+python fig_swath_capture_sensitivity.py          # what if ARMO images less than its 362 km access swath
+python fig_detection_operating_curve.py          # detection vs false alarms, held-out operating points
+python fig_map_spatial_validation.py             # held-out check of the need maps
+python fig_vegetation_representativeness.py
+python fig_sampling_robustness.py
+python fig_depth_comparison.py
+python fig_optical_cloud_penalty.py
+python fig5_observability.py                     # uses generated/quality_attrition_stats.csv
+python fig_mission_decision_frontier.py
+python build_manifest.py                         # figures/figure_manifest.csv
+cd ..
+python tests/test_evidence.py                    # deterministic checks -> figures/generated/test_results.csv
+```
+
+Statistics behind every figure are written to `figures/generated/*.csv`; earlier versions of the revised figures are
+kept in `figures/previous_2026-11-03/`. Method notes and limitations: `docs/FIGURE_SCIENTIFIC_AUDIT.md`.
+
 Each script reads only what earlier scripts wrote. Scripts that download data save what they fetch. If a script stops
 part-way, for example when a server refuses requests, run it again and it continues from what it already has.
 

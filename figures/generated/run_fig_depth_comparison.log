@@ -1,0 +1,13 @@
+                                               quantity     value   ci_lo  ci_hi          note
+                                         events at 5 cm 3340.0000     NaN    NaN           NaN
+                                        events at 10 cm 2531.0000     NaN    NaN           NaN
+                            paired storms (both depths) 2433.0000     NaN    NaN           NaN
+                                 stations in paired set  117.0000     NaN    NaN           NaN
+                     median window 5 cm, all events (d)    1.7917     NaN    NaN           NaN
+                    median window 10 cm, all events (d)    1.8750     NaN    NaN           NaN
+             paired median of (10 cm - 5 cm) window (d)    0.0000  0.0000 0.0833           NaN
+        paired: share of storms lasting longer at 10 cm    0.4982     NaN    NaN           NaN
+paired capture at 1-day revisit: 5 cm / 10 cm / diff pp    0.5549 -1.1770 2.4156 0.861 / 0.867
+paired capture at 2-day revisit: 5 cm / 10 cm / diff pp    0.9042 -1.4158 3.3830 0.723 / 0.732
+paired capture at 3-day revisit: 5 cm / 10 cm / diff pp    1.5071 -0.7210 3.8564 0.600 / 0.615
+paired capture at 6-day revisit: 5 cm / 10 cm / diff pp    2.0277  0.2317 3.9911 0.374 / 0.394

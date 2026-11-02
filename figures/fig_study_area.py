@@ -32,6 +32,9 @@ states.plot(ax=ax, color="#f4f3f0", edgecolor="#bdbcb6", linewidth=0.5)
 lakes.plot(ax=ax, color="#dfe9f3", edgecolor="none")
 pts.plot(ax=ax, column="window_d", cmap=cmap, norm=norm, markersize=np.clip(pts.n, 8, 60) * 0.9,
          edgecolor="white", linewidth=0.6, zorder=3)
+sv = pd.read_csv(os.path.join(PROC, "station_vegetation.csv"))   # WorldCover class at the probe (121 classified stations)
+crop = pts[pts.wban.isin(sv[sv.cover == "Cropland"].wban)]
+ax.scatter(crop.geometry.x, crop.geometry.y, s=95, marker="s", facecolor="none", edgecolor=fs.YELLOW, linewidth=1.6, zorder=4)
 sw = pts[pts.name == "OK_Stillwater_2_W"].geometry.iloc[0]
 ax.scatter([sw.x], [sw.y], s=150, facecolor="none", edgecolor=fs.INK, linewidth=1.4, zorder=4)
 ax.set_axis_off()
@@ -52,10 +55,11 @@ cb.set_label("Median wetting-event window (days)\n(SM anomaly ≥ 50 % of peak r
 cb.outline.set_visible(False)
 h = [plt.scatter([], [], s=n * 0.9, color=fs.SEQ[3], edgecolor="white") for n in (10, 30)]
 h.append(plt.scatter([], [], s=90, facecolor="none", edgecolor=fs.INK, linewidth=1.4))
-fig.legend(h, ["10 events", "30 events", "Stillwater, OK (Fig. 3)"], loc="lower right", ncol=3,
-           bbox_to_anchor=(0.9, 0.06), fontsize=7.5, title="Marker size = number of wetting events", title_fontsize=7.5)
-ax.set_title(f"NOAA USCRN ground-truth stations used ({len(pts)} stations, warm seasons 2025–2026)",
-             loc="left", fontsize=9.5)
+h.append(plt.scatter([], [], s=70, marker="s", facecolor="none", edgecolor=fs.YELLOW, linewidth=1.6))
+fig.legend(h, ["10 events", "30 events", "Stillwater, OK (Fig. 3)", f"WorldCover cropland ({len(crop)})"], loc="lower right", ncol=4,
+           bbox_to_anchor=(0.95, 0.06), fontsize=7.2, title="Marker size = number of wetting events", title_fontsize=7.5)
+ax.set_title(f"NOAA USCRN ground truth: {len(pts)} event stations (of {len(sv)} classified; {len(crop)} cropland), 2025–2026",
+             loc="left", fontsize=9.2)
 fig.text(0.01, 0.0, "Projection: CONUS Albers Equal Area (EPSG:5070). Boundaries: Natural Earth 1:50m.",
          fontsize=6.5, color=fs.INK2)
 fig.savefig(os.path.join(FIG, "fig_study_area.png"))

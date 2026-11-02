@@ -1,0 +1,15 @@
+site                 champaign
+r_rain_dvv            0.549387
+n_cells                   3299
+rain_bin_lo_mm              20
+rain_bin_hi_mm              35
+dvv_rain_low          0.664696
+dvv_rain_mid          1.430149
+dvv_rain_high         1.438483
+station_dvv_110m      5.034964
+frac_valid_pixels          1.0
+sm_before                0.144
+sm_after                 0.259
+sm_peak                  0.285
+rain_station_mm           30.4
+saved C:\Users\Ian\Music\ES4304 Final Project\figures\fig_sar_wetting_event_champaign.png
