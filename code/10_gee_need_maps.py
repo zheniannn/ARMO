@@ -183,6 +183,8 @@ def figure(R, E, missed, gain, stn, sm):
               (E, "b  Wetting events per warm season (gridMET, USCRN-calibrated)", "Greens", [4, 6, 8, 10, 12, 14, 16, 18, 20]),
               (missed, "c  Wetting events per season missed by Sentinel-1", "Oranges", [2, 4, 6, 8, 10, 12, 14]),
               (gain, "d  Extra events per season with ARMO, on cropland (≥ 25 %)", "Purples", [1, 2, 3, 4, 5, 6, 7, 8])]
+    units = ["days", "events per season", "events per season", "events per season"]
+    bar_deg = 500 / (111.32 * np.cos(np.deg2rad(37.0)))   # 500 km in longitude, true at 37° N (the aspect latitude)
     mw = 0.405                                          # map width (figure fraction); CONUS box is 58.5 x 26 deg
     mh = mw * W_IN * (26 * ASP / 58.5) / H_IN
     for k, ((arr, title, cmap, bounds), cap) in enumerate(zip(panels, caps)):
@@ -201,10 +203,20 @@ def figure(R, E, missed, gain, stn, sm):
         ax.set_xlim(-125, -66.5); ax.set_ylim(24, 50); ax.set_xticks([]); ax.set_yticks([]); ax.set_aspect(ASP)
         for sp in ax.spines.values():
             sp.set_visible(False)
+        # scale bar and north arrow (template requirement), in the open Atlantic east of Florida
+        bx, by = -78.5, 25.2
+        ax.plot([bx, bx + bar_deg], [by, by], color=figstyle.INK, lw=1.0, solid_capstyle="butt")
+        for xx, lab in [(bx, "0"), (bx + bar_deg, "500 km")]:
+            ax.plot([xx, xx], [by - 0.25, by + 0.25], color=figstyle.INK, lw=0.6)
+            ax.text(xx, by + 0.55, lab, fontsize=5, ha="center", va="bottom", color=figstyle.INK)
+        ax.annotate("", xy=(-69.0, 29.0), xytext=(-69.0, 25.0),
+                    arrowprops=dict(arrowstyle="-|>", color=figstyle.INK, lw=0.8, mutation_scale=7))
+        ax.text(-69.0, 29.3, "N", fontsize=6.5, fontweight="bold", ha="center", va="bottom", color=figstyle.INK)
         fig.text(x0, y0 + mh + 0.008, title, fontsize=7.5, ha="left", va="bottom")
         cax = fig.add_axes([x0 + mw + 0.012, y0 + 0.08 * mh, 0.012, 0.84 * mh])
         cb = fig.colorbar(im, cax=cax)
         cb.ax.tick_params(labelsize=6)
+        cb.set_label(units[k], fontsize=6, color=figstyle.INK2, labelpad=2)
         fig.text(x0, y0 - 0.012, textwrap.fill(cap.replace("r = ", "r = ").replace("≥ ", "≥ ").replace(" %", " %"), 76), fontsize=6.3, color=figstyle.INK2, ha="left", va="top",
                  linespacing=1.15)
     out = os.path.join(FIG, "fig1_need_maps.png")
