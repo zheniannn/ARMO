@@ -26,7 +26,8 @@ Scripts that download data cache what they fetch, so a re-run reuses the cache. 
 | 09_optical_clouds.py | Earth Engine MODIS cloud mask at each overpass: could optical sensors see the events? | yes (Earth Engine) | optical_*.csv |
 | 10_gee_need_maps.py | Earth Engine CONUS maps: Sentinel-1 revisit, wetting events, missed events, ARMO gain (report Figure 1) | yes (Earth Engine) | need_*.npy, need_summary.csv, ../figures/fig1_need_maps.png |
 | 11_cross_checks.py | Independent checks: S1 passes (Copernicus Data Space), NISAR passes (ASF), ERA5-Land (Earth Engine), rain (gridMET vs USCRN) | yes | cross_check*.csv |
-| ../figures/*.py | Report Figures 2-6 (file numbers match the report) and the study-area map for the slides; `figstyle.py` is the shared style | no | ../figures/ |
+| 12_extract_imagery.py | Imagery subsets for the slide figures: Sentinel-1 VV before/after two storms at Stillwater, OK (Aug 2026), gridMET rain, SMAP 9 km and NISAR 200 m soil moisture | yes (Earthdata, Earth Engine) | imagery/ |
+| ../figures/*.py | Report Figures 2-6 (file numbers match the report) and the slide figures (study area, SAR wetting event, resolution ladder, ARMO coverage, detection matrices); `figstyle.py` is the shared style | no | ../figures/ |
 
 The proposal, slides, market review, self-review and team guide, and the scripts that build them (including the one-step rebuild `50_rebuild_outputs.py`), are kept locally in `Assignment (Do Not Push)/` and are not in this repository.
 

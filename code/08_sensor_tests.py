@@ -198,7 +198,7 @@ def nisar_eval():
         for k in (1.0, 2.0):
             summ[f"P_detect_sat_{k:g}sigma"] = (det.dsat > k * noise_sat).mean()
             summ[f"P_detect_hh_{k:g}sigma"] = (det.dhh > k * noise_hh).mean()
-            summ[f"false_alarm_sat_{k:g}sigma"] = (nochg.dsat > k * noise_sat).mean()
+            summ[f"false_alarm_sat_{k:g}sigma"] = (nochg.dsat.dropna() > k * noise_sat).mean()   # valid retrievals only, as for detection
         # the rates above count a look with no recommended retrieval as a miss (availability x sensitivity);
         # these count only events with a valid retrieval pair (sensitivity alone, comparable to S1 and SMAP)
         summ["n_sampled_sat_valid"] = int(det.dsat.notna().sum())

@@ -102,10 +102,15 @@ python code/08_sensor_tests.py
 python code/09_optical_clouds.py
 python code/10_gee_need_maps.py
 python code/11_cross_checks.py        # optional: checks the inputs against second providers
+python code/12_extract_imagery.py     # imagery for the slide figures
 python figures/fig_study_area.py
 python figures/fig2_workflow.py
 python figures/fig3_4_6_results.py
 python figures/fig5_observability.py
+python figures/fig_sar_wetting_event.py
+python figures/fig_resolution_ladder.py
+python figures/fig_armo_coverage.py      # simulates ARMO's revisit on a 0.5° grid (about 15 min the first time)
+python figures/fig_detection_matrix.py
 ```
 
 Each script reads only what earlier scripts wrote. Scripts that download data save what they fetch. If a script stops
@@ -125,7 +130,8 @@ part-way, for example when a server refuses requests, run it again and it contin
 | `09_optical_clouds.py` | MODIS cloud mask at each overpass: could an optical sensor see the events? | Earth Engine | `optical_*.csv` |
 | `10_gee_need_maps.py` | CONUS need maps (figure above), checked against the stations | Earth Engine | `need_*`, `figures/fig1_need_maps.png` |
 | `11_cross_checks.py` | Optional checks of the inputs against second providers: Copernicus Data Space, ASF, Earth Engine ERA5-Land, gridMET | several | `cross_check*.csv` |
-| `figures/*.py` | Figures 2–6 and the study-area map | – | `figures/*.png` |
+| `12_extract_imagery.py` | Imagery for the slide figures: Sentinel-1 before and after two storms at Stillwater, OK (Aug 2026), gridMET rain, SMAP 9 km and NISAR 200 m soil moisture | Planetary Computer, Earth Engine, NASA ASF | `imagery/` |
+| `figures/*.py` | Report Figures 2–6 and the slide figures (study area, SAR wetting event, resolution ladder, ARMO coverage, detection matrices) | – | `figures/*.png` |
 
 **NISAR downloads (script 05).** The NISAR server (ASF) rate-limits bursts of requests from one address. The script
 therefore uses 3 parallel workers in small batches and stops as soon as ASF refuses a whole batch. Files already

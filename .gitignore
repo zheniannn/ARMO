@@ -1,3 +1,6 @@
+# Any folder named "... (Do Not Push)" stays local: course files, assignment deliverables, past work
+*(Do Not Push)/
+
 # Never publish: course materials (incl. the Earthdata token file) and credentials
 References (Do Not Push)/
 **/NASAEarthDataToken.txt
