@@ -11,6 +11,7 @@ Definitions (fixed before looking at satellite data; see report Section 3.2):
   captured   : at least one satellite acquisition falls inside the window
 """
 import os
+import sys
 import numpy as np
 import pandas as pd
 
@@ -18,6 +19,13 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROC = os.path.join(ROOT, "data", "processed")
 RAW = os.path.join(ROOT, "data", "raw")
 FIG = os.path.join(ROOT, "figures")
+# report and slide generators (20, 30, report_text) are kept out of the repository in "Assignment (Do Not Push)/"
+GEN = os.path.join(ROOT, "Assignment (Do Not Push)")
+if GEN not in sys.path:
+    sys.path.append(GEN)
+# figure scripts and their shared style (figstyle.py) live in figures/
+if FIG not in sys.path:
+    sys.path.append(FIG)
 os.makedirs(FIG, exist_ok=True)
 
 P_MIN_MM = 5.0
@@ -25,6 +33,20 @@ A_MIN = 0.03
 FRAC = 0.5
 STORM_GAP_H = 24
 WET_HOUR_MM = 0.2
+
+
+def rd(f, **kw):
+    """Read a result table from data/processed."""
+    return pd.read_csv(os.path.join(PROC, f), **kw)
+
+
+def cluster_boot_ci(values, groups, rng, n=2000):
+    """95 % CI of a mean by cluster bootstrap over stations (events at one station are not independent)."""
+    values, groups = np.asarray(values), np.asarray(groups)
+    keys = np.unique(groups)
+    by = {k: values[groups == k] for k in keys}
+    means = [np.concatenate([by[k] for k in rng.choice(keys, keys.size)]).mean() for _ in range(n)]
+    return np.percentile(means, [2.5, 97.5])
 
 
 def load_uscrn():
