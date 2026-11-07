@@ -1,4 +1,4 @@
-"""P0-5  Empirical detection vs false alarms for the sensors we tested (OBSERVED), against ARMO's target (UNVALIDATED).
+"""Empirical detection vs false alarms for the sensors we tested (OBSERVED), against ARMO's target (UNVALIDATED).
 
 Scores (no model, no tuning on the evaluation set):
   positive  = a sampled wetting event: the same-geometry change (prior look -> first look inside the window), as in

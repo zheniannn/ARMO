@@ -19,10 +19,6 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROC = os.path.join(ROOT, "data", "processed")
 RAW = os.path.join(ROOT, "data", "raw")
 FIG = os.path.join(ROOT, "figures")
-# report and slide generators (20, 30, report_text) are kept out of the repository in "Assignment (Do Not Push)/"
-GEN = os.path.join(ROOT, "Assignment (Do Not Push)")
-if GEN not in sys.path:
-    sys.path.append(GEN)
 # figure scripts and their shared style (figstyle.py) live in figures/
 if FIG not in sys.path:
     sys.path.append(FIG)

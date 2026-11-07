@@ -1,4 +1,4 @@
-"""P0-3  From a real look to a detected wetting change: where events are lost, sensor by sensor (OBSERVED).
+"""From a real look to a detected wetting change: where events are lost, sensor by sensor (OBSERVED).
 
 (a) Matched NISAR-era cohort (979 events, 107 stations): for each sensor, the number of the SAME 979 events that reach each
     stage. Stages: real look inside the window -> valid same-geometry pair (ground-matched, no rain in the 3 h before

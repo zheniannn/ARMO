@@ -123,7 +123,7 @@ check(11, "radar frequency (GHz)", 1.26, 299792458 / float(sz.lambda_m) / 1e9, 0
 check(11, "reflector diameter (m)", 5.9, float(sz.reflector_d_m), 0.05, "armo_sizing.csv")
 check(11, "wet mass per satellite (kg)", 316, rl["wet_mass_per_satellite"], 0.5, "code/06 realistic_sizing()")
 check(19, "peak RF power (kW)", 2.8, rl["rf_power_peak"] / 1e3, 0.05, "realistic_sizing()")
-check(19, "earlier mission estimate (US$ M)", 149.8, rd("armo_cost.csv").usd_m.sum(), 0.05, "code/06 armo_cost.csv")
+check(19, "bottom-up mission estimate (US$ M)", 149.8, rd("armo_cost.csv").usd_m.sum(), 0.05, "code/06 armo_cost.csv")
 
 out = pd.DataFrame(rows)
 out.to_csv(os.path.join(GEN, "slide_numbers.csv"), index=False)

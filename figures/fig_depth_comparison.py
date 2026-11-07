@@ -1,4 +1,4 @@
-"""P1-10  5 cm vs 10 cm: the same storms seen at two probe depths (OBSERVED; ideal revisit sampling SIMULATED).
+"""5 cm vs 10 cm: the same storms seen at two probe depths (OBSERVED; ideal revisit sampling SIMULATED).
 Source: data/processed/depth_events.csv (code/06_mission_design.py depth_test). Storms are paired by (station, storm start):
 only storms that produced an event at BOTH depths enter the paired comparison, so the depth contrast is not confounded by
 which storms qualify. This is about how long wetting lasts at each probe depth; it says nothing about the electromagnetic

@@ -1,4 +1,4 @@
-"""Independently recompute the master-prompt anchor values from data/processed/ and flag disagreements.
+"""Independently recompute 36 headline values from data/processed/ and flag disagreements.
 
 Output: figures/generated/anchor_check.csv (anchor, expected, recomputed, tolerance, status, source)
 Run:    python figures/reproduce_anchors.py      (offline; a few seconds)

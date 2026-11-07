@@ -1,4 +1,4 @@
-"""P1-7  Cloud penalty: clear-sky optical opportunities vs all-weather sampling at the SAME cadence (MODEL-BASED proxy).
+"""Cloud penalty: clear-sky optical opportunities vs all-weather sampling at the SAME cadence (MODEL-BASED proxy).
 Source: data/processed/optical_events.csv (code/09_optical_clouds.py): for every wetting event, the phase-averaged chance
 that a regular morning optical sampler at R days sees a CLEAR pixel inside the window (MODIS cloud mask at the station),
 and the same sampler ignoring clouds (all-weather). Paired per event -> paired differences with station-cluster CIs.

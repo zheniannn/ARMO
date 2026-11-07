@@ -28,7 +28,7 @@ from common import PROC
 
 import sys
 
-# Extra wetting cases (added 3 Nov 2026), chosen from s1_pairs.csv as strong same-orbit 2026 pairs with a large probe rise:
+# Additional wetting cases, chosen from s1_pairs.csv as strong same-orbit 2026 pairs with a large probe rise:
 #   oakley    KS_Oakley_19_SSW (3067): 4 -> 16 Aug 2026, descending orbit 85, probe +0.255 m3/m3, +5.5 dB (grassland, farm region)
 #   champaign IL_Champaign_9_SW (54808): 4 -> 16 Sep 2026, ascending orbit 19, probe +0.115 m3/m3, +5.2 dB (cropland, near harvest)
 # Run: python 12_extract_imagery.py oakley | champaign   (Sentinel-1 pair + gridMET rain only; no SMAP / NISAR subsets)

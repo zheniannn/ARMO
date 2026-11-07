@@ -6,7 +6,7 @@ Two versions per site: *_scientific (reference layout, small type) and *_present
 Supplementary NISAR L-band figure (*_nisar_*) where a same-track before/after GCOV pair exists
 (code/13_extract_nisar_gcov.py).
 
-Inputs (no data are changed):
+Inputs:
   data/processed/imagery/[<site>_]s1_vv_<date>_60km_40m.npz      code/12_extract_imagery.py (Planetary Computer S1 RTC)
   data/processed/imagery/[<site>_]gridmet_rain_<d0>_<d1>.npz      same script (Earth Engine IDAHO_EPSCOR/GRIDMET, 0.01 deg)
   data/processed/imagery/nisar_gcov/*.npz                          code/13_extract_nisar_gcov.py
@@ -52,7 +52,7 @@ H, HALF = pd.Timedelta(hours=1), pd.Timedelta(minutes=30)
 GM_X0, GM_Y1, GM_D = -124.78749996666667, 49.42083333333334, 1 / 24      # gridMET native grid (Earth Engine metadata)
 INK, GREY, LIGHT, PALE = "#1B2631", "#5B6770", "#D5DDE3", "#D3E6F1"
 S1_COL, NI_COL, RAIN_COL = "#E07B00", "#7B3FA0", "#2F5F8A"
-VV_LIM, DVV_LIM, RAIN_MAX = (-18, -5), 4.0, 110          # shared by all three sites (see audit for the percentiles)
+VV_LIM, DVV_LIM, RAIN_MAX = (-18, -5), 4.0, 110          # shared by all three sites
 
 SITES = {
     "stillwater": dict(name="Stillwater 2 W, Oklahoma", short="Stillwater", wban=53926, lon=-97.09, lat=36.12, prefix="",
@@ -170,7 +170,7 @@ def native_stats(d40, x0, y1, epsg, rain, ext, bins, rng, res=40.0):
 
 
 def existing_stats(a, b, rain, ext, lon0, lat0, bins):
-    """Exact re-run of the first SAR wetting-event figure (since retired): 0.01 deg cells, 4 km windows of the 40 m change."""
+    """Statistics on 0.01 deg cells: 4 km windows of the 40 m change."""
     d40 = b["vv_db"] - a["vv_db"]
     gx0, gx1, gy0, gy1 = ext; ny, nx = rain.shape
     tr = Transformer.from_crs(4326, int(a["epsg"]), always_xy=True)

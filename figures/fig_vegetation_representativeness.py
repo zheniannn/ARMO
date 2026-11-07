@@ -1,4 +1,4 @@
-"""P1-8  How representative are the stations of farmland, and does detection depend on cover?  (OBSERVED)
+"""How representative are the stations of farmland, and does detection depend on cover?  (OBSERVED)
 Sources: station_vegetation.csv (ESA WorldCover at the probe, USDA CDL crop flag; 121 classified stations), events.csv
 (3,340 events at 120 event stations), s1/nisar/smap sampled events + the published 1-sigma noise.
 (a) composition: classified stations (121) vs event stations (120) vs events, by WorldCover class at the probe.

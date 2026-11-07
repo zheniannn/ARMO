@@ -1,7 +1,6 @@
 """Legend only, for the slide 5 figure (SMAP 9 km | NISAR 200 m | Sentinel-1 10 m, Stillwater, 23-25 Aug 2026).
 Symbols and colours match the ladder (figures/fig_slide_assets.py,
 slide09_resolution_ladder.png): same files, quality screen, colour maps, limits, grey (#D9DCDF), marker.
-Nothing in the data or the screening is changed.
 
 Verified for the legend (printed when run):
   grey in the NISAR panel = no recommended retrieval: retrieval-quality flag bit 0 set (excluded by the screen) or

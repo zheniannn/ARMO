@@ -48,7 +48,7 @@ idealised sampler), **literature** (published or agency sources, not computed he
 | 17 | 80 % capture needs a regular revisit of ~1.5 days (1.46 d, 95 % band 1.31–1.64) | simulated | `code/01_events.py` (`capture_synthetic.csv`); `figures/figS05_capture_vs_revisit.png` |
 | 18 | Fleet median gap 2.0 d; fleet + ROSE-L 63.7 %; SMAP retrieval in 77 % of windows (27 % recommended quality) | observed / simulated | `code/06`, `code/08_sensor_tests.py` |
 | 18 | ROSE-L, SAOCOM and commercial-product facts | literature | [Sources](#sources-for-the-literature-claims) |
-| 19 | US$ 115 M NASA EVO-1 request; illustrative allocation | literature | `docs/EVO1_budget_illustrative.csv`; earlier estimate US$ 149.8 M from `code/06` (`armo_cost.csv`) |
+| 19 | US$ 115 M NASA EVO-1 request; illustrative allocation | literature | `docs/EVO1_budget_illustrative.csv`; bottom-up estimate US$ 149.8 M from `code/06` (`armo_cost.csv`) |
 | 20 | 51.6 % → 81.5 % | as slides 10 and 12 | – |
 
 ![Capture gain from ARMO](figures/figS11_capture_gain_paired_ci.png)
@@ -58,8 +58,8 @@ points, 95 % CI 27.2–32.6); (b) paired gain for all five designs; (c) capture 
 **Funding.** The presentation proposes ARMO for NASA's Earth Venture Orbital-1 (EVO-1), Category (c) full mission, at
 US$ 115 M: the upper end of the US$ 35–115 M range in NASA's March 2026 Community Announcement (FY2026 dollars).
 NASA's July 2026 Q&A lists US$ 115 M for a full mission, launch included, in FY2028 dollars. The request is
-preliminary and subject to the final solicitation. The project's own earlier estimate was ≈ US$ 149.8 M, so the
-design would need scope and cost reconciliation to fit the cap (as stated on slide 19).
+preliminary and subject to the final solicitation. The project's bottom-up cost model gives ≈ US$ 149.8 M, so the
+design needs scope and cost reconciliation to fit the cap (as stated on slide 19).
 
 ## What is in this repository
 
@@ -71,7 +71,7 @@ figures/   slideNN_*.png   figures used on presentation slide NN
            figure_manifest.csv lists every figure, its inputs, cohort, uncertainty and placement
            generated/      the statistics behind each figure and the check results
 tests/     deterministic checks (python tests/test_evidence.py)
-docs/      method notes and limitations (FIGURE_SCIENTIFIC_AUDIT.md); slide 19 allocation (EVO1_budget_illustrative.csv)
+docs/      method notes and limitations (METHOD_NOTES.md); slide 19 allocation (EVO1_budget_illustrative.csv)
 LICENSE    MIT
 ```
 
@@ -272,7 +272,7 @@ These slide statements come from published or agency sources, not from the code:
 - **Cropland is under-represented:** 9 of the 121 classified stations are cropland (`figures/figS02`).
 - **No commercial daily product** (e.g. Spire D-HSSM) could be tested: no independent accuracy or event-timing data
   exist.
-- **The spacecraft sizing and cost are concept-stage estimates,** not quotes. The US$ 115 M request and the earlier
+- **The spacecraft sizing and cost are concept-stage estimates,** not quotes. The US$ 115 M request and the bottom-up
   US$ 149.8 M estimate are not yet reconciled.
 
 ## Licence and acknowledgements

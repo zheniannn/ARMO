@@ -1,4 +1,4 @@
-"""P0-2  Paired gain in observation opportunity from adding simulated ARMO to the real fleet (OBSERVED baseline vs SIMULATED).
+"""Paired gain in observation opportunity from adding simulated ARMO to the real fleet (OBSERVED baseline vs SIMULATED).
 
 Input: data/processed/armo_event_capture_by_phase.csv (code/06_mission_design.py event_flags): one row per event x design x
 orbital phase with the real-fleet look flag, the simulated ARMO-alone look flag and the combined flag, on the SAME 979

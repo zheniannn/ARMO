@@ -1,4 +1,4 @@
-"""P0-1  Which real wetting events does today's fleet miss?  (OBSERVED: real acquisition times vs USCRN windows)
+"""Which real wetting events does today's fleet miss?  (OBSERVED: real acquisition times vs USCRN windows)
 
 Cohort: the matched NISAR-era cohort, 979 events at 107 USCRN stations, storms starting 17 Jun-31 Oct 2026.
 A "real acquisition look" = at least one actual Sentinel-1C/1D or NISAR acquisition inside the event window

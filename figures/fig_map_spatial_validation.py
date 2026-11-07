@@ -1,4 +1,4 @@
-"""P1-6  Do the national need maps hold at stations they were not fitted on?  (MODEL-BASED maps vs OBSERVED stations)
+"""Do the national need maps hold at stations they were not fitted on?  (MODEL-BASED maps vs OBSERVED stations)
 
 The maps (code/10_gee_need_maps.py, figures/figS13_need_maps_report.png) convert gridMET storm onsets to wetting events with ONE
 pooled factor k = events / onsets fitted at all USCRN station-seasons (in-sample r ~ 0.8), then estimate events missed by

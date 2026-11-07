@@ -74,4 +74,4 @@ slide,claim,on_slide,recomputed,tolerance,status,source
 11,reflector diameter (m),5.9,5.9,0.05,MATCH,armo_sizing.csv
 11,wet mass per satellite (kg),316.0,316.1018,0.5,MATCH,code/06 realistic_sizing()
 19,peak RF power (kW),2.8,2.7588,0.05,MATCH,realistic_sizing()
-19,earlier mission estimate (US$ M),149.8,149.7634,0.05,MATCH,code/06 armo_cost.csv
+19,bottom-up mission estimate (US$ M),149.8,149.7634,0.05,MATCH,code/06 armo_cost.csv

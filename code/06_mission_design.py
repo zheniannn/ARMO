@@ -420,7 +420,7 @@ def sizing():
 
 
 def realistic_sizing():
-    """Realistic re-sizing of the same design D (engineering audit, 3 Nov 2026); these are the values on the slides
+    """Realistic sizing of design D; these are the values on the slides
     (~316 kg wet, ~2.8 kW peak RF, 11 beams, 220-300 km usable swath). sizing() takes antenna gain as 4*pi*A/lambda^2,
     i.e. a 100 %-efficient aperture, and tiles no beams; this step applies sourced engineering factors instead. It does
     not change the orbit or coverage model. Output: data/processed/armo_sizing_realistic.csv"""
@@ -471,7 +471,7 @@ def realistic_sizing():
 
 
 # ====================================================================================================
-# event_flags (optional; added 3 Nov 2026 for the evidence figures; does not change the outputs above)
+# event_flags (optional; per-event outputs for the supplementary figures; does not change the outputs above)
 # ====================================================================================================
 
 def broadside_passes(t, r, v, lat, lon, rev):

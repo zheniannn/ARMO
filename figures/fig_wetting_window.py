@@ -1,8 +1,7 @@
 """Slide 5: a real wetting episode between satellite acquisitions (Stillwater 2 W, OK, 10-29 Aug 2026).
 
-Audited re-draw of the deck's Stillwater timeline (the original slide asset s3_stillwater_aug2026.png).
-No data or thresholds are changed: events are read from data/processed/events_real.csv and re-derived with
-common.detect_events (asserted identical); acquisition times are read from the processed files, not typed in.
+Events are read from data/processed/events_real.csv and re-derived with common.detect_events (asserted identical);
+acquisition times are read from the processed files, not typed in.
 
 Time convention (NOAA USCRN hourly02 README, UTC_TIME): each hourly value is labelled at the END of its hour, so the
 record labelled hh:00 covers (hh-1, hh]. common.captured() already compares an acquisition at hh:mm with the record

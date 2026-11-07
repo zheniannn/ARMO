@@ -1,4 +1,4 @@
-"""P1-9  Does the event definition drive the result?  3 x 3 rain-threshold x rise-threshold grid (OBSERVED events; ideal
+"""Does the event definition drive the result?  3 x 3 rain-threshold x rise-threshold grid (OBSERVED events; ideal
 regular-revisit sampling SIMULATED on them).  Source: data/processed/sensitivity.csv (code/01_events.py sensitivity()).
 Only the quantities actually rerun for each definition are shown (event count, median window, capture at 2/3/6-day
 regular revisits). The 80 %-capture revisit was NOT recomputed per definition and is not shown.

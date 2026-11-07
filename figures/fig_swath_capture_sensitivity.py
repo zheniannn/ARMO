@@ -1,11 +1,11 @@
-"""P0-4  What if ARMO can only image a strip narrower than its 362 km access corridor?  (SIMULATED, HYPOTHETICAL envelope)
+"""What if ARMO can only image a strip narrower than its 362 km access corridor?  (SIMULATED, HYPOTHETICAL envelope)
 
 Baseline design D assumes every station inside the 25-45 deg off-nadir access corridor (~362 km of ground range) is imaged
 on every pass. A real ScanSAR/stripmap mode images a strip of usable width W. code/06_mission_design.py event_flags models
 W = 50, 100, 200 km with two deterministic, station-agnostic tasking rules (fixed central strip; strip stepped every
 revolution) and W = 362 km (baseline). Scored on the SAME 979 events and 8 orbital phases as the baseline; paired with
 the real fleet (OBSERVED acquisition times). Gaps: ARMO-only looks per station in the NISAR era, gaps <= 6 h dropped
-(same rule as the claim audit). Data volume: first-order assumption that volume scales with imaged width at fixed pixel
+(looks < 6 h apart count as one overpass). Data volume: first-order assumption that volume scales with imaged width at fixed pixel
 spacing (MODEL-BASED; no imaging-mode design exists). This is a feasibility envelope, NOT an imaging-mode certification.
 Outputs: figures/figS12_swath_capture_sensitivity.png, figures/generated/swath_sensitivity_stats.csv
 """
