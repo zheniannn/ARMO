@@ -1,6 +1,6 @@
 """Do the national need maps hold at stations they were not fitted on?  (MODEL-BASED maps vs OBSERVED stations)
 
-The maps (code/10_gee_need_maps.py, figures/figS13_need_maps_report.png) convert gridMET storm onsets to wetting events with ONE
+The maps (code/10_gee_need_maps.py, figures/figS14_need_maps_report.png) convert gridMET storm onsets to wetting events with ONE
 pooled factor k = events / onsets fitted at all USCRN station-seasons (in-sample r ~ 0.8), then estimate events missed by
 Sentinel-1 as events x (1 - c(R_S1)), with c(R) = E[min(1, W/R)] from the USCRN windows and R_S1 from Earth Engine.
 Here, offline from need_stations.csv / station_seasons.csv / events_real.csv:
@@ -10,7 +10,7 @@ Here, offline from need_stations.csv / station_seasons.csv / events_real.csv:
       without a real Sentinel-1 look in the 2026 season (events_real.csv, cap_Sentinel-1 (2026 season)).
 The maps' gain layer is Sentinel-1-only; the mission claims use Sentinel-1 + NISAR. Maps are screening estimates, not
 observed per-field misses.
-Outputs: figures/figS14_map_spatial_validation.png, figures/generated/map_spatial_validation_stats.csv
+Outputs: figures/figS15_map_spatial_validation.png, figures/generated/map_spatial_validation_stats.csv
 """
 import numpy as np
 import pandas as pd
@@ -112,5 +112,5 @@ fs.panel_label(c, "c")
 fig.text(0.01, -0.14, "MODEL-BASED map quantities validated against OBSERVED USCRN stations. Held-out: the events-per-onset factor is refitted "
          "without the test stations (5 longitude blocks). (c) Sentinel-1-only layer, 2026 season,\nGEE revisit + held-out k vs real "
          "acquisition looks; CI = station bootstrap. Maps are screening estimates at 0.1°, not observed per-field misses.", fontsize=6, color=fs.INK2)
-ae.save(fig, "figS14_map_spatial_validation")
+ae.save(fig, "figS15_map_spatial_validation")
 print(S.round(3).to_string(index=False)); print("k (all) =", round(k_all, 3))

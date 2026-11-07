@@ -1,4 +1,4 @@
-"""The report need maps (figures/figS13_need_maps_report.png) split into two slide figures, re-checked against the cached data.
+"""The report need maps (figures/figS14_need_maps_report.png) split into two slide figures, re-checked against the cached data.
 
 Slide 14 (slide14_need_maps_looks_events): a Sentinel-1 days between looks; b wetting events per warm season.
 Slide 15 (slide15_need_maps_armo_gain): a wetting events per season with no Sentinel-1 look; b extra wetting events

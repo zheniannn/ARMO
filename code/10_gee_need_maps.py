@@ -10,7 +10,7 @@
     shown where cropland (MODIS MCD12Q1) covers >= 25 % of the cell.
 Checks against ground truth: GEE revisit vs the Planetary Computer record at the stations (step 02), and gridMET onsets
 vs USCRN wetting events per station-season. Outputs: data/processed/need_grid.npz, need_stations.csv, need_summary.csv,
-figures/figS13_need_maps_report.png
+figures/figS14_need_maps_report.png
 """
 import os
 import numpy as np
@@ -219,7 +219,7 @@ def figure(R, E, missed, gain, stn, sm):
         cb.set_label(units[k], fontsize=6, color=figstyle.INK2, labelpad=2)
         fig.text(x0, y0 - 0.012, textwrap.fill(cap.replace("r = ", "r = ").replace("≥ ", "≥ ").replace(" %", " %"), 76), fontsize=6.3, color=figstyle.INK2, ha="left", va="top",
                  linespacing=1.15)
-    out = os.path.join(FIG, "figS13_need_maps_report.png")
+    out = os.path.join(FIG, "figS14_need_maps_report.png")
     fig.savefig(out, dpi=300, bbox_inches="tight", pad_inches=0.03); print("saved", out)
 
 

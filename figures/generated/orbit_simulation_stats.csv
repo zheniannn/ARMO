@@ -1,0 +1,9 @@
+quantity,value
+altitude (km),620.0
+inclination (deg),97.86654006670584
+orbital period (min),97.10316609006166
+access swath (km),362.38727375062575
+"CONUS passes on 2026-08-22, satellite A",6.0
+"CONUS passes on 2026-08-22, satellite B",7.0
+"ARMO looks at Stillwater, 17 Jun-31 Oct 2026 (phase 0)",93.0
+"median gap between ARMO looks at Stillwater (d, looks < 6 h apart merged)",1.4969328703703704

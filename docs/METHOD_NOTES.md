@@ -96,9 +96,23 @@ At a held-out 10 % threshold it detects 50 %. No field-scale sensor reaches ≥ 
 **Confusion matrices — `figS10_detection_matrix.png` (OBSERVED).** Counts per sensor at the 1σ rule; missing
 retrievals excluded.
 
-## 6. ARMO (slides 12 and 13)
+## 6. ARMO (slides 11–13)
 
-**Paired gain — `figS11_capture_gain_paired_ci.png` (OBSERVED baseline, SIMULATED ARMO).**
+**Orbit simulator — `figS11_orbit_simulation.png` (SIMULATED looks).** `code/06_mission_design.py` flies each candidate
+design and turns it into look times at every station:
+- Orbit: circular, 620 km, sun-synchronous (inclination 97.9° from the J2 condition; ascending node at 18:00 local, a
+  dawn–dusk orbit), J2 nodal precession, spherical Earth, Earth rotation by GMST; positions every 10 s from 1 June to
+  10 November 2026. Period 97 min.
+- Look rule: a side-looking SAR sees a station at closest approach if the station is on the looking side and 25–45°
+  off-nadir (362 km access swath). Design B/C/E satellites roll left and right on alternate revolutions; a SAR images
+  one side at a time.
+- Designs: A one satellite; B one satellite rolling; C one satellite rolling with 20–50° access; D two satellites 180°
+  apart; E two satellites rolling.
+- Scoring: simulated looks are merged with the real Sentinel-1 and NISAR look times and scored on the 979 events,
+  averaged over 8 initial orbital phases.
+- Example (design D, phase 0): 93 looks at Stillwater between 17 June and 31 October 2026, median gap 1.5 d.
+
+**Paired gain — `figS12_capture_gain_paired_ci.png` (OBSERVED baseline, SIMULATED ARMO).**
 - Design D: **+29.9 points** on the same events, 95 % CI **27.2–32.6** (station bootstrap, phases averaged); range over
   the 8 orbital phases 29.0–30.4; station + phase bootstrap 26.6–33.4. On average 293 events (284–298 by phase) gain a
   look.
@@ -106,7 +120,7 @@ retrievals excluded.
 - By duration (design D): < 1 d 16 → 42 %, 1–2 d 51 → 90 %, 2–3 d 61 → 98 %, ≥ 3 d → 100 %. Events shorter than a day
   are still mostly missed.
 
-**Usable imaging swath — `figS12_swath_capture_sensitivity.png` (SIMULATED, hypothetical).** Design D's 81.5 % assumes
+**Usable imaging swath — `figS13_swath_capture_sensitivity.png` (SIMULATED, hypothetical).** Design D's 81.5 % assumes
 the whole 25–45° access corridor (≈ 362 km) is imaged on every pass. Narrower usable strips, two station-agnostic
 tasking rules ('fixed': one central strip; 'cycled': strips stepped across the corridor every revolution), same 979 events and 8 phases:
 
@@ -125,11 +139,11 @@ power, radiometry and polarimetry for any width are UNVALIDATED.
 
 ## 7. Need maps (slides 14 and 15)
 
-**Validation — `figS14_map_spatial_validation.png` (MODEL-BASED against OBSERVED).** Refitting the single
+**Validation — `figS15_map_spatial_validation.png` (MODEL-BASED against OBSERVED).** Refitting the single
 events-per-onset factor without the test stations (5 longitude blocks) leaves skill unchanged: r 0.82 held out against
 0.82 in sample (227 station-seasons); weaker on cropland cells (r 0.69, n 37). The map's Sentinel-1 missed-event layer
 against each station's actual 2026 misses: **r 0.78 (CI 0.71–0.84)**, bias −0.9 events per season. The maps are 0.1°
-screening estimates with a Sentinel-1-only baseline, not per-field observations. `figS13_need_maps_report.png` is drawn
+screening estimates with a Sentinel-1-only baseline, not per-field observations. `figS14_need_maps_report.png` is drawn
 by `code/10_gee_need_maps.py` and needs Earth Engine to regenerate.
 
 ## 8. Limitations

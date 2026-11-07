@@ -24,13 +24,13 @@ Scripts that download data cache what they fetch, so a re-run reuses the cache. 
 | 07_gee_extract.py | Earth Engine: SMAP L3E 9 km, MODIS NDVI, ESA WorldCover, USDA CDL at each station | yes (Earth Engine) | gee_*.csv |
 | 08_sensor_tests.py | Sentinel-1, NISAR and SMAP accuracy and P(detect given sampled) (O3); detection by NDVI, land cover and event size | no | s1_*.csv, nisar_*.csv, smap_*.csv, detection_strata.csv, station_vegetation.csv |
 | 09_optical_clouds.py | Earth Engine MODIS cloud mask at each overpass: could optical sensors see the events? | yes (Earth Engine) | optical_*.csv |
-| 10_gee_need_maps.py | Earth Engine CONUS maps: Sentinel-1 revisit, wetting events, missed events, ARMO gain (supplementary Figure S13) | yes (Earth Engine) | need_*.npy, need_summary.csv, ../figures/figS13_need_maps_report.png |
+| 10_gee_need_maps.py | Earth Engine CONUS maps: Sentinel-1 revisit, wetting events, missed events, ARMO gain (supplementary Figure S13) | yes (Earth Engine) | need_*.npy, need_summary.csv, ../figures/figS14_need_maps_report.png |
 | 11_cross_checks.py | Independent checks: S1 passes (Copernicus Data Space), NISAR passes (ASF), ERA5-Land (Earth Engine), rain (gridMET vs USCRN) | yes | cross_check*.csv |
 | 12_extract_imagery.py | Imagery subsets for the slide figures: Sentinel-1 VV before/after two storms at Stillwater, OK (Aug 2026), gridMET rain, SMAP 9 km and NISAR 200 m soil moisture | yes (Earthdata, Earth Engine) | imagery/ |
 | 13_extract_nisar_gcov.py | NISAR L2 GCOV (L-band backscatter) before/after subsets for the case-study sites, 60 x 60 km on a 40 m lattice | yes (Earthdata) | imagery/nisar_gcov/ |
 | 14_check_station_validity.py | Reads the station pixel for every case-study look (Sentinel-1 RTC value, NISAR GCOV mask): usable observation or not | yes (Earthdata) | acquisition_validity.csv |
 | 15_slide_numbers.py | Recomputes every analysis number quoted in the presentation and checks it against the slides | no | ../figures/generated/slide_numbers.csv |
-| ../figures/*.py | Slide figures (slideNN_*.png, NN = slide in the presentation) and supplementary figures (figS01-figS14_*.png, in the order of the slides they support); `figstyle.py` is the shared style | no (fig_case_studies: Earth Engine on first run) | ../figures/ |
+| ../figures/*.py | Slide figures (slideNN_*.png, NN = slide in the presentation) and supplementary figures (figS01-figS15_*.png, in the order of the slides they support); `figstyle.py` is the shared style | no (fig_case_studies: Earth Engine on first run) | ../figures/ |
 
 ## Data sources
 - NOAA USCRN hourly02: https://www.ncei.noaa.gov/pub/data/uscrn/products/hourly02/
