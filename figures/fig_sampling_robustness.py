@@ -2,7 +2,7 @@
 regular-revisit sampling SIMULATED on them).  Source: data/processed/sensitivity.csv (code/01_events.py sensitivity()).
 Only the quantities actually rerun for each definition are shown (event count, median window, capture at 2/3/6-day
 regular revisits). The 80 %-capture revisit was NOT recomputed per definition and is not shown.
-Outputs: figures/fig_sampling_robustness.png/.pdf, figures/generated/sampling_robustness_stats.csv
+Outputs: figures/figS03_sampling_robustness.png, figures/generated/sampling_robustness_stats.csv
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -33,7 +33,7 @@ fig.text(0.01, -0.16, f"OBSERVED events (USCRN, 120 stations, Apr–Oct 2025–2
          f"dawn/dusk-averaged). Boxed = definition used throughout.\nRange: {s.n_events.min():,}–{s.n_events.max():,} events; median window "
          f"{s.median_window_h.min():.0f}–{s.median_window_h.max():.0f} h; 2-day capture {s.cap_R2.min():.1%}–{s.cap_R2.max():.1%}; 6-day "
          f"{s.cap_R6.min():.1%}–{s.cap_R6.max():.1%}. The 80 %-capture revisit was not recomputed per definition.", fontsize=6, color=fs.INK2)
-ae.save(fig, "fig_sampling_robustness")
+ae.save(fig, "figS03_sampling_robustness")
 ae.write_stats("sampling_robustness_stats", [dict(metric=c, min=s[c].min(), max=s[c].max(), baseline=s[(s.p_min == 5) & (s.a_min == 0.03)][c].iloc[0])
                                               for c in ["n_events", "median_window_h", "cap_R2", "cap_R3", "cap_R6", "cap_R12"]])
 print(s.round(3).to_string(index=False))

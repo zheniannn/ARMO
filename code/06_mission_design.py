@@ -419,6 +419,57 @@ def sizing():
     print(pd.Series(siz).round(3).to_string()); print(mass.round(1).to_string()); print(cost.round(2).to_string())
 
 
+def realistic_sizing():
+    """Realistic re-sizing of the same design D (engineering audit, 3 Nov 2026); these are the values on the slides
+    (~316 kg wet, ~2.8 kW peak RF, 11 beams, 220-300 km usable swath). sizing() takes antenna gain as 4*pi*A/lambda^2,
+    i.e. a 100 %-efficient aperture, and tiles no beams; this step applies sourced engineering factors instead. It does
+    not change the orbit or coverage model. Output: data/processed/armo_sizing_realistic.csv"""
+    sz = pd.read_csv(os.path.join(PROC, "armo_sizing.csv")).iloc[0]
+    mass = pd.read_csv(os.path.join(PROC, "armo_mass.csv"))
+    RL = dict(
+        eta=(0.60, "offset mesh reflector aperture efficiency: front-fed dishes 55-65 %, offset designs up to ~70 % "
+                   "(Rahmat-Samii & Haupt 2015, IEEE APM 57(2)); mesh leakage is a further loss"),
+        edge_db=(3.0, "two-way loss at subswath edges with elevation beams overlapped at -1.5 dB (as NISAR's 12 overlapped "
+                      "beams; Kellogg et al. 2020, IEEE Aerospace Conf.)"),
+        duty=(0.10, "transmit duty: PRF >= 2.7 kHz for a 5.9 m antenna leaves <= 56 km of slant window, so ~37 us pulses"),
+        sspa_w=(200.0, "space L-band GaN SSPA > 200 W, > 60 % PAE (Yang et al. 2022, Electron. Lett. 58(7)); end-to-end "
+                       "35 % DC-to-RF kept (includes power conditioning)"),
+        refl_kg=(25.0, "SMAP 6 m AstroMesh reflector ~25 kg (Mobrem et al. 2012, IEEE Aerospace Conf.; NASA 2015)"),
+        boom_kg=(32.0, "SMAP 5 m boom ~25 kg + ~7 kg launch restraints (NASA 2015)"),
+        adapter_kg=(40.0, "dual-launch adapter/dispenser (engineering estimate)"),
+        aace=((-0.20, 1.00), "AACE RP 18R-97 Class 5 (concept) accuracy, -20 % to +100 %"))
+    v = lambda k: RL[k][0]
+    pavg = float(sz.P_avg_rf_w) * 10 ** (v("edge_db") / 10) / v("eta") ** 2
+    ppeak = pavg / v("duty")
+    dc_img = pavg / 0.35 + 150.0
+    orbit_w = 150.0 + dc_img * float(sz.duty_conus) + 60.0 * float(sz.downlink_min_day) * 60 / 86400
+    bw = 1.2 * float(sz.lambda_m) / float(sz.reflector_d_m) * np.sqrt(1.5 / 3.0)      # -1.5 dB one-way beam width
+    n_beams = int(np.ceil(np.deg2rad(20.0) / bw))
+    # current best estimate: project dry mass with the reflector and boom/feed lines replaced by SMAP-based values
+    cbe = float(mass.kg.iloc[:9].sum()) - float(mass.kg.iloc[0]) - float(mass.kg.iloc[1]) + v("refl_kg") + v("boom_kg") + 15.0 + 10.0 + 8.0
+    wet = cbe * 1.3 * np.exp(120 / (9.80665 * 220))                                    # 30 % margin, 120 m/s, Isp 220 s
+    RE, r = 6371.0, 6371.0 + H_KM
+    gr = lambda inc: RE * (np.deg2rad(inc) - np.arcsin(RE / r * np.sin(np.deg2rad(inc))))
+    rows = [("aperture_efficiency", v("eta"), "fraction", RL["eta"][1]),
+            ("elevation_beams", n_beams, "beams", RL["edge_db"][1]),
+            ("rf_power_avg", pavg, "W", "NESZ -25 dB at 45 deg off-nadir; " + RL["eta"][1]),
+            ("rf_power_peak", ppeak, "W", RL["duty"][1]),
+            ("sspa_200w_units", int(np.ceil(ppeak / v("sspa_w"))), "units", RL["sspa_w"][1]),
+            ("dc_power_imaging", dc_img, "W", "35 % DC-to-RF + 150 W electronics"),
+            ("dc_power_pulse", ppeak / 0.35 / 1e3, "kW", "drawn from a capacitor bank"),
+            ("orbit_average_power", orbit_w, "W", "imaging duty from the orbit model"),
+            ("battery", (dc_img + 150.0) * 10 / 60 / 0.3, "Wh", "10-min imaging pass at 30 % depth of discharge"),
+            ("dry_mass_cbe", cbe, "kg", RL["refl_kg"][1] + "; " + RL["boom_kg"][1]),
+            ("wet_mass_per_satellite", wet, "kg", "30 % margin, 120 m/s delta-v"),
+            ("launch_mass_two_plus_adapter", 2 * wet + v("adapter_kg"), "kg", RL["adapter_kg"][1]),
+            ("usable_swath_30_45deg_incidence", gr(45) - gr(30), "km", "spherical Earth, 620 km; L-band soil-moisture incidence range"),
+            ("cost_low", float(sz.cost_total) * (1 + v("aace")[0]), "US$ M", RL["aace"][1]),
+            ("cost_high", float(sz.cost_total) * (1 + v("aace")[1]), "US$ M", RL["aace"][1])]
+    out = pd.DataFrame(rows, columns=["parameter", "value", "unit", "basis"])
+    out.to_csv(os.path.join(PROC, "armo_sizing_realistic.csv"), index=False)
+    print(out[["parameter", "value", "unit"]].round(2).to_string(index=False))
+
+
 # ====================================================================================================
 # event_flags (optional; added 3 Nov 2026 for the evidence figures; does not change the outputs above)
 # ====================================================================================================
@@ -553,3 +604,4 @@ if __name__ == "__main__":
         orbit_designs()
         performance()
         sizing()
+        realistic_sizing()

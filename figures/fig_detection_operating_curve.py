@@ -12,7 +12,7 @@ Uncertainty: station-cluster bootstrap resampling stations once for positives an
 Held-out evaluation (no leakage): the threshold for FPR <= 10 % is the 90th percentile of TRAINING negatives only, then
 applied to held-out data: (i) year split 2025 -> 2026 (S1, SMAP); (ii) 5-fold split by station (all sensors).
 The 1-sigma operating point uses sigma estimated from all negatives (in-sample), as in the published results.
-Outputs: figures/fig_detection_operating_curve.png/.pdf, figures/generated/detection_operating_curve_stats.csv,
+Outputs: figures/figS09_detection_operating_curve.png, figures/generated/detection_operating_curve_stats.csv,
          figures/generated/detection_roc_points.csv
 """
 import os
@@ -134,5 +134,5 @@ fig.text(0.01, -0.22,
          "Dashed box = ARMO requirement (≥ 70 % detection at ≤ 10 % false alarms): a target, not a demonstrated result. "
          "The ≤ 0.038 m³/m³ noise requirement is MODEL-BASED (calibrated detection model), not measured here.",
          fontsize=5.8, color=fs.INK2)
-ae.save(fig, "fig_detection_operating_curve")
+ae.save(fig, "figS09_detection_operating_curve")
 print(S.round(3).T.to_string())

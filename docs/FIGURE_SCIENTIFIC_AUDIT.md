@@ -21,7 +21,7 @@ reproduces the claim audit (longest ARMO gap 5.49 d).
 
 ## 2. High-priority analyses (P0)
 
-### P0-1 Which real events are missed? — `fig_event_capture_severity.png` (OBSERVED)
+### P0-1 Which real events are missed? — `figS07_event_capture_severity.png` (OBSERVED)
 - Look categories on the 979 events: none 474 (48.4 %), S1 only 134, NISAR only 209, both 162.
 - Look rate by window duration, station-bootstrap 95 % CI: < 1 d 16.3 % (11.3–22.6), 1–2 d 50.8 % (43.6–58.1),
   2–3 d 61.1 % (53.4–68.5), 3–5 d 75.3 % (67.9–82.0), ≥ 5 d 85.3 % (79.0–91.4).
@@ -29,7 +29,7 @@ reproduces the claim audit (longest ARMO gap 5.49 d).
   (Spearman ρ(amp, window) = 0.19). **Standardised to the cohort's duration mix the difference is +3.4 pp (CI −2.9 to
   +10.3): no detectable amplitude effect once duration is held fixed.** Missing an event is a timing problem.
 
-### P0-2 Paired gain from ARMO — `fig_capture_gain_paired_ci.png` (OBSERVED baseline, SIMULATED ARMO)
+### P0-2 Paired gain from ARMO — `figS11_capture_gain_paired_ci.png` (OBSERVED baseline, SIMULATED ARMO)
 - Design D: **+29.9 pp** paired gain on the same events. 95 % CI **27.2–32.6** (station bootstrap, phases averaged);
   range over the 8 orbital phases 29.0–30.4; station + phase bootstrap 26.6–33.4. On average 293 events (284–298 by
   phase) are newly given a look.
@@ -37,7 +37,7 @@ reproduces the claim audit (longest ARMO gap 5.49 d).
 - By duration (design D): < 1 d 16 → 42 %, 1–2 d 51 → 90 %, 2–3 d 61 → 98 %, ≥ 3 d → 100 %. Even with ARMO, events
   shorter than a day are mostly missed.
 
-### P0-3 From a look to a detected change — `fig_quality_attrition.png` (OBSERVED)
+### P0-3 From a look to a detected change — `figS08_quality_attrition.png` (OBSERVED)
 Same 979 events, same denominator (events reaching each stage):
 
 | Sensor | Look in window | Valid same-geometry pair | Valid retrieval in pair | Change > 1σ |
@@ -56,7 +56,7 @@ Same 979 events, same denominator (events reaching each stage):
   they are different cohorts: S1 33 % (n 624) / FA 8.8 % (n 2,376); NISAR HH 23 % (216) / 3.9 % (511); SME2 37 % (139) /
   8.6 % (372); SMAP any 53 % (2,200) / 8.1 % (27,190); SMAP recommended 65 % (693) / 8.6 % (13,527).
 
-### P0-4 Usable imaging swath — `fig_swath_capture_sensitivity.png` (SIMULATED, hypothetical) — **negative result**
+### P0-4 Usable imaging swath — `figS12_swath_capture_sensitivity.png` (SIMULATED, hypothetical) — **negative result**
 Design D's 81.5 % assumes the whole 25–45° access corridor (≈ 362 km) is imaged on every pass. Narrower usable strips,
 two station-agnostic tasking rules, same 979 events, 8 phases:
 
@@ -70,12 +70,11 @@ two station-agnostic tasking rules, same 979 events, 8 phases:
 | 50 km | 57.9 / 58.0 % | +6.3 / +6.4 | 3.0–6.0 / 24–27 d / 41–79 d |
 
 **No strip narrower than the full corridor reaches 80 %.** The 80 % target therefore requires imaging essentially the
-whole 362 km access swath at 100–200 m on every pass, which no design yet shows. This is now an explicit Gate 3 test
-in the proposal and deck. Data volume was assumed proportional to imaged width (MODEL-BASED); power, radiometry and
+whole 362 km access swath at 100–200 m on every pass, which no design yet shows. This is stated as a limitation in the README. Data volume was assumed proportional to imaged width (MODEL-BASED); power, radiometry and
 polarimetry for any width are UNVALIDATED. Earlier tiling of the "cycled" rule left a partial last strip and was
 corrected to evenly spaced overlapping strips before these results were taken.
 
-### P0-5 Detection vs false alarms — `fig_detection_operating_curve.png` (OBSERVED; target UNVALIDATED)
+### P0-5 Detection vs false alarms — `figS09_detection_operating_curve.png` (OBSERVED; target UNVALIDATED)
 Positives = sampled-event changes; negatives = unchanged pairs (|ΔSM| < 0.01). FPR = probability of false detection,
 not false-alarm ratio. Thresholds swept in units of each sensor's no-change σ.
 
@@ -89,54 +88,49 @@ not false-alarm ratio. Thresholds swept in units of each sensor's no-change σ.
 
 - NISAR HH's published 23 % reflects a conservative operating point (heavy-tailed no-change noise; 1σ gives only 4 %
   false alarms). At a held-out 10 % threshold it detects 50 %. **No field-scale sensor reaches the ≥ 70 % / ≤ 10 % box.**
-- **Independent check of the model-based noise requirement:** SMAP recommended-quality data were not used to calibrate
-  the detection model. Their soil-moisture-equivalent noise is 0.037 m³/m³, essentially the 0.038 requirement; the
-  model predicts 71.6 % detection, the observed rate is **65.4 %** (n 693). The requirement is therefore likely
-  optimistic; Stage 1 must set it from measured detection (now stated in the proposal and Q&A).
+- The model-based 0.038 m³/m³ noise requirement checked here (SMAP recommended: 71.6 % predicted vs 65.4 % observed,
+  n 693) was retired on 7 Nov 2026 with `snr_requirement()`; the presentation does not use it.
 
 ## 3. Additional analyses (P1)
 
-- **P1-6 need-map validation** (`fig_map_spatial_validation.png`, MODEL-BASED vs OBSERVED). Refitting the single
+- **P1-6 need-map validation** (`figS14_map_spatial_validation.png`, MODEL-BASED vs OBSERVED). Refitting the single
   events-per-onset factor without the test stations (5 longitude blocks) leaves skill unchanged: r 0.82 held out vs 0.82
   in sample (227 station-seasons); weaker on cropland cells (r 0.69, n 37). The map's Sentinel-1 missed-event layer vs
   each station's actual 2026 misses: **r 0.78 (CI 0.71–0.84)**, bias −0.9 events per season (slight underestimate).
   The maps remain 0.1° screening estimates with a Sentinel-1-only baseline, not per-field observations.
-- **P1-7 optical cloud penalty** (`fig_optical_cloud_penalty.png`, MODEL-BASED proxy). Clear-sky optical vs all-weather at
+- **P1-7 optical cloud penalty** (`figS06_optical_cloud_penalty.png`, MODEL-BASED proxy). Clear-sky optical vs all-weather at
   the same cadence: 1 d 47.0 vs 86.3 % (−39 pp, CI 37–42); 2 d 32.9 vs 72.2; 3 d 24.8 vs 59.8 (−35); 5 d 16.4 vs 42.8;
   8 d 10.6 vs 28.5. Clouds remove 46–63 % of opportunities. MODIS cloud mask proxy only.
-- **P1-8 representativeness** (`fig_vegetation_representativeness.png`). 121 classified stations (120 with events;
+- **P1-8 representativeness** (`figS02_vegetation_representativeness.png`). 121 classified stations (120 with events;
   station 4125 has none); WorldCover cropland 9 (7 by USDA CDL at the probe), grassland 60, tree cover 36. Cropland
   detection groups are too small for S1 (n 17) and NISAR HH (n 24) and are flagged; SMAP cropland 56 % (n 192). No
   national crop-performance inference is possible.
-- **P1-9 event definition** (`fig_sampling_robustness.png`). 2,522–3,807 events; median window 40–48 h; 2-day capture
+- **P1-9 event definition** (`figS03_sampling_robustness.png`). 2,522–3,807 events; median window 40–48 h; 2-day capture
   69.7–74.8 %; 6-day 34.0–40.5 %. The 80 %-capture revisit was not recomputed per definition.
-- **P1-10 depth** (`fig_depth_comparison.png`). 2,433 storms produce events at both 5 and 10 cm (117 stations). Paired
+- **P1-10 depth** (`figS04_depth_comparison.png`). 2,433 storms produce events at both 5 and 10 cm (117 stations). Paired
   median window difference **0 h** (CI 0 to +2 h); paired capture difference +0.6 (1 d), +0.9 (2 d), +1.5 (3 d), +2.0 pp
   (6 d, CI 0.2–4.0). The earlier unpaired medians (1.79 vs 1.88 d) overstate the depth contrast. About probe depth only.
-- **P1-11 decision matrix** (`fig_mission_decision_frontier.png`). Evidence matrix, not a Pareto frontier; Spire accuracy,
-  event timing and price are UNKNOWN; ARMO D's 81.5 % is conditional on full-swath imaging and its detection on 70 %
-  retrieval.
-- **P2-12 commercial benchmark: BLOCKED** — no product data exist; see `docs/COMMERCIAL_BENCHMARK_BLOCKED.md`.
+- **P1-11 decision matrix** (`fig_mission_decision_frontier.png`): retired 7 Nov 2026; the presentation's comparison
+  slide (18) replaces it. Spire's accuracy, event timing and price remain UNKNOWN.
+- **P2-12 commercial benchmark: BLOCKED** — no independent accuracy or event-timing data exist for commercial daily
+  soil-moisture products (e.g. Spire D-HSSM); a head-to-head test would need purchased data at USCRN stations.
 
 ## 4. Audit of existing figures
 
 | Figure | Action | Reason |
 |---|---|---|
-| fig1_need_maps | kept; validated (P1-6); report caption issue noted | S1-only screening estimate; regenerating needs Earth Engine |
-| fig2_workflow | revised | decision box now "CONDITIONAL: Stage 1 now; Stage 2 only if gates pass" |
-| fig3_stillwater_example | kept | single-site illustration |
-| fig4_capture_vs_revisit | revised legend | "ideal regular sampler on measured windows" (SIMULATED sampling) |
-| fig5_observability | revised panel c; panel d titled MODEL-BASED | old "end-to-end" bars multiplied rates from different cohorts |
-| fig6_marginal_value | revised caption | ARMO bars are idealised regular samplers, not design D; ROSE-L ~2030 or later; bar CIs are not gain CIs |
-| fig_armo_coverage | caveat added | access opportunities with the whole corridor imaged; panel c sums rates; not event capture |
-| fig_detection_matrix | kept | technical backup; complemented by P0-5 |
-| fig_market_niche | kept | generated from a dated in-script source table (private 19_market_report.py), updated 3 Nov 2026 |
-| fig_resolution_ladder, fig_sar_wetting_event | kept | real imagery; single case; backscatter change has non-unique causes |
-| fig_study_area | revised | 120 event / 121 classified stations; 9 cropland outlined |
-| slide assets (title_bg, s3, s4, s6) | kept | regenerated by make_assets.py; backups in `Submission (Do Not Push)/assets/previous_2026-11-03/` |
-| native charts (slides 8, 9, 10, 11, 14, 15, A4) | text revised (9, 10, 15) | duration finding, held-out detection, paired gain CI |
+| figS13_need_maps_report | kept; validated (P1-6); report caption issue noted | S1-only screening estimate; regenerating needs Earth Engine |
+| fig2_workflow | retired 7 Nov 2026 | gated two-stage decision no longer the narrative |
+| fig3_stillwater_example | retired 7 Nov 2026 | replaced by fig_wetting_window (slide 5) |
+| figS05_capture_vs_revisit | revised legend; own script 7 Nov 2026 | "ideal regular sampler on measured windows" (SIMULATED sampling) |
+| fig5_observability | retired 7 Nov 2026 | panel d's noise requirement retired; detection shown by figS08_quality_attrition and figS09_detection_operating_curve |
+| fig6_marginal_value | retired 7 Nov 2026 | idealised regular samplers, not design D; replaced by figS11_capture_gain_paired_ci and slides 12–13 |
+| figS10_detection_matrix | kept | technical backup; complemented by P0-5 |
+| slide09_resolution_ladder, case_studies/stillwater_* | kept | real imagery; single case; backscatter change has non-unique causes |
+| figS01_study_area | revised | 120 event / 121 classified stations; 9 cropland outlined |
+| deck figures (title background, ladder, wetting window, need maps, case studies) | kept | scripts in figures/ (see figure_manifest.csv) |
 
-Previous versions of every revised figure and script: `figures/previous_2026-11-03/`.
+Earlier figure versions are in the git history.
 
 ## 5. Differences from previously reported claims
 
@@ -146,8 +140,8 @@ Previous versions of every revised figure and script: `figures/previous_2026-11-
 2. SMAP "41 % end to end" (product) → 34 % of the same events (any quality), 15 % with recommended quality.
 3. NISAR HH "23 % detection" is at the 1σ rule (4 % false alarms); at a held-out 10 % false-alarm threshold it is 50 %.
 4. The 81.5 % / +29.9 pp result requires imaging the whole 362 km access swath; with 200 km it is 72–73 %.
-5. The ≤ 0.038 m³/m³ noise requirement is model-based and, on an out-of-sample check, optimistic (65 % observed vs 72 %
-   predicted at that noise).
+5. The ≤ 0.038 m³/m³ noise requirement was model-based and, on an out-of-sample check, optimistic (65 % observed vs 72 %
+   predicted at that noise); it was retired on 7 Nov 2026.
 6. Paired CI for the gain now reported (27.2–32.6) instead of two separate capture CIs.
 7. Claim-audit evidence class corrected: `depth10_cap_R2` was labelled OBSERVED; it is simulated sampling on observed
    events (caught by `tests/test_evidence.py`).
@@ -167,7 +161,7 @@ None of the 36 anchor values changed; the conclusions above are additions and co
 - NISAR results are provisional and from one season (year split BLOCKED).
 - Only 9 cropland stations; cropland detection is not estimable for S1 / NISAR.
 - Spire / fusion benchmark BLOCKED (no data).
-- `fig1_need_maps.png` was not regenerated (needs Earth Engine credentials); its limitation is documented here and in
+- `figS13_need_maps_report.png` was not regenerated (needs Earth Engine credentials); its limitation is documented here and in
   the manifest.
 
 ## 7. Tests

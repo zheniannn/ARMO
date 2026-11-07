@@ -3,7 +3,7 @@ Source: data/processed/optical_events.csv (code/09_optical_clouds.py): for every
 that a regular morning optical sampler at R days sees a CLEAR pixel inside the window (MODIS cloud mask at the station),
 and the same sampler ignoring clouds (all-weather). Paired per event -> paired differences with station-cluster CIs.
 Caveat: MODIS cloud mask as a proxy for clear-sky optical acquisition; not an evaluation of any specific optical system.
-Outputs: figures/fig_optical_cloud_penalty.png/.pdf, figures/generated/optical_cloud_penalty_stats.csv
+Outputs: figures/figS06_optical_cloud_penalty.png, figures/generated/optical_cloud_penalty_stats.csv
 """
 import numpy as np
 import matplotlib.pyplot as plt
@@ -37,5 +37,5 @@ loss = 1 - S.optical_clear / S.all_weather
 ax.set_title(f"Clouds remove {loss.min() * 100:.0f}–{loss.max() * 100:.0f} % of same-cadence opportunities", loc="left", fontsize=8.6)
 fig.text(0.01, -0.1, f"MODEL-BASED proxy on OBSERVED windows: {len(o):,} USCRN events, {o.wban.nunique()} stations, 2025–2026; morning overpass, phase-averaged. "
          "Bands = 95 % station-bootstrap CI;\nlabels = paired difference. Not an evaluation of any specific optical satellite.", fontsize=6.1, color=fs.INK2)
-ae.save(fig, "fig_optical_cloud_penalty")
+ae.save(fig, "figS06_optical_cloud_penalty")
 print(S.round(3).to_string(index=False))

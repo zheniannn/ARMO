@@ -6,7 +6,7 @@ A "real acquisition look" = at least one actual Sentinel-1C/1D or NISAR acquisit
 (a) mutually exclusive look categories; (b) look probability by window duration with station-cluster bootstrap CIs;
 (c) duration-adjusted check of event amplitude: is a large rise (>= 0.09 m3/m3) more or less likely to be looked at
     once window duration is held fixed? (direct standardisation to the cohort duration mix; paired bootstrap).
-Outputs: figures/fig_event_capture_severity.png/.pdf, figures/generated/event_capture_severity_stats.csv
+Outputs: figures/figS07_event_capture_severity.png, figures/generated/event_capture_severity_stats.csv
 """
 import numpy as np
 import pandas as pd
@@ -129,6 +129,6 @@ fig.text(0.01, -0.035,
          f"acquisition inside the half-amplitude window (not a retrieval or detection).\n{int((missed & c.big).sum())} of "
          f"{int(missed.sum())} events without a look rose ≥ 0.09 m³/m³. 95 % CIs: station-cluster bootstrap (2,000 draws, seed "
          f"{ae.SEED}); standardisation uses the cohort's duration mix.", fontsize=6.4, color=fs.INK2)
-ae.save(fig, "fig_event_capture_severity")
+ae.save(fig, "figS07_event_capture_severity")
 ae.write_stats("event_capture_severity_stats", stats)
 print(pd.DataFrame(stats).round(4).to_string(index=False))

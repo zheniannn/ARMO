@@ -9,7 +9,7 @@ separately because they answer different questions:
   phase   : spread of the gain across the 8 simulated initial orbital phases (orbit-placement uncertainty; not sampling)
   both    : each bootstrap draw resamples stations AND picks one phase at random (covers both; wider)
 No CI is derived by differencing two independent CIs.
-Outputs: figures/fig_capture_gain_paired_ci.png/.pdf, figures/generated/capture_gain_paired_stats.csv
+Outputs: figures/figS11_capture_gain_paired_ci.png, figures/generated/capture_gain_paired_stats.csv
 """
 import os
 import numpy as np
@@ -126,6 +126,6 @@ fig.text(0.01, -0.05,
          f"A look is an opportunity, not a detection. ARMO D newly looks at {D['new'].mean():.0f} events on average "
          f"(range {D['new'].min()}–{D['new'].max()} over phases).\nCIs: station-cluster bootstrap of the paired gain (2,000 draws); 'stations + phase' "
          f"also draws one random phase per replicate.", fontsize=6.1, color=fs.INK2)
-ae.save(fig, "fig_capture_gain_paired_ci")
+ae.save(fig, "figS11_capture_gain_paired_ci")
 print(S.round(3).T.to_string())
 print(DR.round(3).to_string(index=False))

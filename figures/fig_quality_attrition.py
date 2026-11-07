@@ -10,7 +10,7 @@
 (b) Detection when sampled with the published, full-period denominators (S1 and SMAP: 2025-2026 seasons; NISAR: 2026),
     station-cluster bootstrap 95 % CI. Different sensors = different event cohorts: not a same-cohort comparison.
 (c) False-alarm rate on unchanged pairs (|dSM| < 0.01 m3/m3), its own denominator; NOT part of the wetting-event chain.
-Outputs: figures/fig_quality_attrition.png/.pdf, figures/generated/quality_attrition_stats.csv
+Outputs: figures/figS08_quality_attrition.png, figures/generated/quality_attrition_stats.csv
 """
 import os
 import numpy as np
@@ -162,5 +162,5 @@ fig.text(0.01, -0.06,
          + ", ".join(f"{k} {v}" for k, v in nn.items() if v) + ".\n(b, c) Different cohorts and periods per sensor; "
          "95 % CIs = station-cluster bootstrap. False alarm = probability of a > 1σ rise on an unchanged pair (not a false-alarm ratio).",
          fontsize=6.1, color=fs.INK2)
-ae.save(fig, "fig_quality_attrition")
+ae.save(fig, "figS08_quality_attrition")
 print(pd.DataFrame(stats).round(4).to_string(index=False))

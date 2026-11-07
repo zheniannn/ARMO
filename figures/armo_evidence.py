@@ -70,11 +70,9 @@ def wilson(k, n, z=1.96):
     return c - h, c + h
 
 
-def save(fig, name, pdf=True):
-    """Save PNG (300 dpi) and, where practical, a vector PDF next to it in figures/."""
+def save(fig, name):
+    """Save the figure as a 300 dpi PNG in figures/."""
     fig.savefig(os.path.join(FIG, name + ".png"), dpi=300)
-    if pdf:
-        fig.savefig(os.path.join(FIG, name + ".pdf"))
 
 
 def write_stats(name, rows):

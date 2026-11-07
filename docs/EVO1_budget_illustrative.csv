@@ -1,0 +1,11 @@
+# ARMO illustrative allocation of the proposed NASA EVO-1 request (slide 19), US$M. Slide 19 labels it FY2026 US$, as NASA's March 2026 Community Announcement states the US$35-115M range; NASA's EVO-1 Q&A (Rev. 01, 31 Jul 2026) lists US$115M for a full mission (launch included) in FY2028 dollars. Earlier-estimate column: armo_cost.csv (code/06, FY2026 US$). Illustrative only, not a validated cost estimate.
+category,evo1_illustrative_usd_m,share_pct,first_draft_usd_m,earlier_armo_estimate_usd_m,earlier_basis
+Two SAR spacecraft and radar payloads,50,43.5,60,70.0,"flight system, analogy NovaSAR-1 / CYGNSS"
+"Integration, testing and qualification",8,7.0,9,,inside the 20 % PM/SE/MA/I&T line (US$14.0M)
+"Launch (PI-provided, inside the cap)",15,13.0,0,15.0,"Firefly Alpha class, secondary price sources"
+Ground systems and data infrastructure,5,4.3,6,6.0,estimate
+Mission operations and open science,5,4.3,6,6.95,Phase E operations (3 years in the earlier plan; EVO-1 prime mission >= 1 year)
+Programme management and systems engineering,7,6.1,8,14.0,20 % line incl. mission assurance and I&T
+Scientific development and field validation,3,2.6,4,4.26,"PI/science team, BLS salaries"
+Programme reserves,22,19.1,22,33.55,30 % Phases A-D + 15 % Phase E
+TOTAL,115,100.0,115,149.76,armo_cost.csv total (FY2026 US$)

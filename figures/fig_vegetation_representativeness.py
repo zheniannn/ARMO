@@ -5,7 +5,7 @@ Sources: station_vegetation.csv (ESA WorldCover at the probe, USDA CDL crop flag
 (b) detection when sampled by cover class, station-cluster bootstrap 95 % CI; classes with < 30 sampled events or < 5
     stations are marked "n too small" and must not be interpreted. No national crop-performance inference is possible:
     only 9 classified stations are WorldCover cropland (7 by USDA CDL at the probe).
-Outputs: figures/fig_vegetation_representativeness.png/.pdf, figures/generated/vegetation_representativeness_stats.csv
+Outputs: figures/figS02_vegetation_representativeness.png, figures/generated/vegetation_representativeness_stats.csv
 """
 import numpy as np
 import pandas as pd
@@ -82,5 +82,5 @@ fs.panel_label(b, "b")
 fig.text(0.01, -0.24, "OBSERVED. WorldCover class at the USCRN probe (121 classified stations; 120 with wetting events; station 4125 has none). "
          "Numbers in bars = sampled events. 95 % CIs: station-cluster bootstrap.\nHatched/pale: < 30 sampled events or < 5 stations — "
          "not interpretable. Too few cropland sites for any national crop-performance inference.", fontsize=6, color=fs.INK2)
-ae.save(fig, "fig_vegetation_representativeness")
+ae.save(fig, "figS02_vegetation_representativeness")
 print(S.round(3).to_string(index=False))

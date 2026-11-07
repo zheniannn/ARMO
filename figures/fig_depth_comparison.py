@@ -3,7 +3,7 @@ Source: data/processed/depth_events.csv (code/06_mission_design.py depth_test). 
 only storms that produced an event at BOTH depths enter the paired comparison, so the depth contrast is not confounded by
 which storms qualify. This is about how long wetting lasts at each probe depth; it says nothing about the electromagnetic
 sensing depth of any radar band.
-Outputs: figures/fig_depth_comparison.png/.pdf, figures/generated/depth_comparison_stats.csv
+Outputs: figures/figS04_depth_comparison.png, figures/generated/depth_comparison_stats.csv
 """
 import numpy as np
 import pandas as pd
@@ -57,5 +57,5 @@ fs.panel_label(b, "b")
 fig.text(0.01, -0.12, "OBSERVED windows (USCRN 5 cm and 10 cm probes, same event rule); capture = ideal regular revisit (SIMULATED sampling). "
          "Paired by station and storm start; CIs = station-cluster bootstrap.\nAbout probe-depth wetting duration only, not radar penetration depth.",
          fontsize=6.2, color=fs.INK2)
-ae.save(fig, "fig_depth_comparison")
+ae.save(fig, "figS04_depth_comparison")
 print(S.round(4).to_string(index=False))

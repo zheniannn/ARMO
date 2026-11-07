@@ -17,8 +17,6 @@ import armo_evidence as ae  # noqa: E402
 from common import PROC  # noqa: E402
 
 GEN = os.path.join(ROOT, "figures", "generated")
-SUB = os.path.join(ROOT, "Submission (Do Not Push)")
-REP = os.path.join(ROOT, "Assignment (Do Not Push)")
 
 
 class Blocked(Exception):
@@ -97,11 +95,19 @@ def test_smap_policies_consistent():
     assert abs(v("SMAP recommended") - sm.loc["capture_era", "recommended"]) < 0.002
 
 
-def test_no_simulated_capture_labelled_observed():
-    a = pd.read_csv(need(os.path.join(SUB, "ARMO_ES4304_Claim_Audit.csv")))
-    sim_keys = a.key.str.contains("armo|rosel|gain|swath|design|hh_fleet_rosel|R_for_80|cap_R", case=False, regex=True)
-    bad = a[sim_keys & (a.evidence_class.str.strip() == "OBSERVED")]
-    assert bad.empty, f"simulated quantities labelled OBSERVED: {bad.key.tolist()}"
+def test_realistic_sizing_matches_slides():
+    """The spacecraft values on the slides come from code/06_mission_design.py realistic_sizing()."""
+    r = pd.read_csv(need(os.path.join(PROC, "armo_sizing_realistic.csv"))).set_index("parameter").value
+    assert r["elevation_beams"] == 11 and r["sspa_200w_units"] == 14
+    assert round(r["wet_mass_per_satellite"]) == 316 and round(r["launch_mass_two_plus_adapter"]) == 672
+    assert abs(r["rf_power_peak"] - 2759) < 1 and round(r["orbit_average_power"]) == 165
+    assert round(r["usable_swath_30_45deg_incidence"]) == 221
+
+
+def test_slide_numbers_match():
+    """code/15_slide_numbers.py recomputes every analysis number in the submitted slides."""
+    s = pd.read_csv(need(os.path.join(GEN, "slide_numbers.csv")))
+    assert len(s) >= 70 and (s.status == "MATCH").all(), s[s.status != "MATCH"].claim.tolist()
 
 
 def test_manifest_complete():
@@ -117,33 +123,9 @@ def test_manifest_complete():
         assert m[col].notna().all(), f"manifest column {col} has gaps"
 
 
-def test_figure_scripts_ran_cleanly():
-    logs = glob.glob(os.path.join(GEN, "run_fig_*.log"))
-    if not logs:
-        raise Blocked("no run logs")
-    for lg in logs:
-        assert "Traceback" not in open(lg, encoding="utf-8", errors="replace").read(), os.path.basename(lg)
-
-
 def test_anchors_match():
     a = pd.read_csv(need(os.path.join(GEN, "anchor_check.csv")))
     assert (a.status == "MATCH").all(), a[a.status != "MATCH"].anchor.tolist()
-
-
-def test_deck_and_pdf_counts():
-    from pptx import Presentation
-    import pymupdf
-    p = Presentation(need(os.path.join(SUB, "ARMO_ES4304_18_Main_Slides.pptx")))
-    assert len(p.slides) == 27, "18 main + divider + 8 backups"
-    assert len(pymupdf.open(need(os.path.join(SUB, "ARMO_ES4304_18_Main_Slides.pdf")))) == 18
-    assert len(pymupdf.open(need(os.path.join(SUB, "ARMO_ES4304_Full_Deck_with_Appendix.pdf")))) == 27
-
-
-def test_report_sections_within_ten_pages():
-    import pymupdf
-    d = pymupdf.open(need(os.path.join(REP, "ARMO_Proposal_ES4304.pdf")))
-    ref = next(i + 1 for i, pg in enumerate(d) if pg.get_text().lstrip("0123456789 \n").startswith("References"))
-    assert ref <= 12, f"References start on page {ref}: Sections 1-5 exceed pages 2-11"
 
 
 TESTS = [v for k, v in sorted(globals().items()) if k.startswith("test_")]

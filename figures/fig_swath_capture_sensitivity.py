@@ -7,7 +7,7 @@ revolution) and W = 362 km (baseline). Scored on the SAME 979 events and 8 orbit
 the real fleet (OBSERVED acquisition times). Gaps: ARMO-only looks per station in the NISAR era, gaps <= 6 h dropped
 (same rule as the claim audit). Data volume: first-order assumption that volume scales with imaged width at fixed pixel
 spacing (MODEL-BASED; no imaging-mode design exists). This is a feasibility envelope, NOT an imaging-mode certification.
-Outputs: figures/fig_swath_capture_sensitivity.png/.pdf, figures/generated/swath_sensitivity_stats.csv
+Outputs: figures/figS12_swath_capture_sensitivity.png, figures/generated/swath_sensitivity_stats.csv
 """
 import os
 import numpy as np
@@ -96,5 +96,5 @@ fig.text(0.01, -0.1,
          "(107 stations, 17 Jun–31 Oct 2026), real Sentinel-1 + NISAR looks as baseline, 8 orbital phases. Not an imaging-mode design: radiometry,\n"
          "polarimetry, 100–200 m product quality, power and downlink for any W are UNVALIDATED. Data volume assumed ∝ W at fixed pixel spacing.",
          fontsize=5.9, color=fs.INK2)
-ae.save(fig, "fig_swath_capture_sensitivity")
+ae.save(fig, "figS12_swath_capture_sensitivity")
 print(R.round(3).to_string(index=False))

@@ -13,7 +13,7 @@ import numpy as np
 import pandas as pd
 import requests
 import pystac_client
-from common import PROC, to_hours, captured, cluster_boot_ci
+from common import PROC, to_hours, captured
 
 NISAR_ERA = ("2026-06-17", "2026-11-01")  # continuous provisional NISAR record
 CMR = "https://cmr.earthdata.nasa.gov/search/granules.json"
@@ -126,48 +126,3 @@ if __name__ == "__main__":
     rv = pd.DataFrame(rrows)
     rv.to_csv(os.path.join(PROC, "revisit_real.csv"), index=False)
     print(rv.groupby("fleet")[["n_acq", "mean_gap_d", "median_gap_d", "max_gap_d"]].median().round(2))
-
-    # ---- Decisive test: marginal value of a NEW regular-revisit mission (ARMO) ----
-    # existing fleet = real S1 + NISAR looks; future fleet adds ROSE-L, simulated as a
-    # regular 6-day L-band sampler (ESA's documented two-satellite revisit over global land; 3 d is Europe only,
-    # tested as an optimistic case).
-    from common import synthetic_schedule
-    sub = ev[era].copy()
-    ws_e, we_e = to_hours(sub.t_ws), to_hours(sub.t_we)
-    t_first, t_last = pd.Timestamp("2026-06-01", tz="UTC"), pd.Timestamp("2026-11-10", tz="UTC")
-
-    def fleet_plus(R_list, base_by):
-        """Mean capture when regular samplers with intervals R_list (phase-averaged,
-        dawn/dusk) are added to the real base fleet."""
-        prob = np.zeros(len(sub))
-        for w, idx in sub.groupby("wban").groups.items():
-            i = sub.index.get_indexer(idx)
-            off = int(sub.utc_off.iloc[i[0]])
-            base = to_hours(base_by.get(w, pd.Series(dtype="datetime64[ns, UTC]"))) if base_by else np.array([])
-            combos = [[]]
-            for R in R_list:  # independent random phase for each added mission
-                combos = [c + [(R, ph, hh)] for c in combos for ph in range(R) for hh in (6, 18)]
-            acc = 0.0
-            for c in combos:
-                obs = np.concatenate([base] + [synthetic_schedule(t_first, t_last, R, ph, hh, off) for R, ph, hh in c])
-                acc += captured(np.sort(obs), ws_e[i], we_e[i])
-            prob[i] = acc / len(combos)
-        return prob
-
-    mrows = []
-    base_now = fleet_plus([], both_by)
-    for name, R_list, base in [("Current fleet (S1C/D + NISAR)", [], both_by),
-                               ("Current fleet + ARMO 1-day", [1], both_by),
-                               ("Current fleet + ARMO 2-day", [2], both_by),
-                               ("Current fleet + ARMO 3-day", [3], both_by),
-                               ("Current fleet + ARMO 4-day", [4], both_by),
-                               ("Future fleet (+ROSE-L 6-day)", [6], both_by),
-                               ("Future fleet + ARMO 2-day", [6, 2], both_by),
-                               ("Future fleet + ARMO 3-day", [6, 3], both_by),
-                               ("Optimistic future (+ROSE-L 3-day)", [3], both_by),
-                               ("Optimistic future + ARMO 2-day", [3, 2], both_by)]:
-        p = base_now if not R_list else fleet_plus(R_list, base)
-        lo, hi = cluster_boot_ci(p, sub.wban, np.random.default_rng(1))
-        mrows.append(dict(scenario=name, capture=p.mean(), ci_lo=lo, ci_hi=hi))
-        print(mrows[-1])
-    pd.DataFrame(mrows).to_csv(os.path.join(PROC, "marginal_value.csv"), index=False)

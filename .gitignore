@@ -1,8 +1,8 @@
 # Any folder named "... (Do Not Push)" stays local: course files, assignment deliverables, past work
 *(Do Not Push)/
 
-# Never publish: course materials (incl. the Earthdata token file) and credentials
-References (Do Not Push)/
+# Never publish: the course report template and credentials
+Remote_Sensing_Final_Report_Template*.docx
 **/NASAEarthDataToken.txt
 .netrc
 _netrc
@@ -18,5 +18,11 @@ __pycache__/
 # Assignment deliverables, their generators and internal team notes (Q&A prep, guide, checklist): local only
 Assignment (Do Not Push)/
 
+# Slide decks and their working files (group deliverables; the figure scripts behind them are in figures/ and code/)
+slides/
+
 # Local full-project backup (contains data and course files): never published
 Recovery Point/
+
+# Submitted deck: kept local (17 MB; members named on slide 1)
+Group2_FinalProjectSlides.pptx

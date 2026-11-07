@@ -1,0 +1,16 @@
+panel,quantity,value,basis,as printed
+a,"median days between Sentinel-1 looks, CONUS cells",5.631578947368421,need_summary.csv,5.6 d
+a,"r, Earth Engine look days vs station record (stations)",0.8963777932524122,n = 121 stations,0.90
+b,"wetting events per gridMET onset (pooled, USCRN)",0.7490468714958511,227 station-seasons,0.75
+b,"r, gridMET onsets vs USCRN wetting events",0.8222308323614796,227 station-seasons,0.82
+b,USCRN stations plotted (qualifying),121,station_seasons.csv included,121 (old caption said 120)
+b,USCRN stations with >= 1 wetting event,120,events.csv,120
+c,USCRN wetting windows used for W,3340,events.csv,"3,340"
+c,"median wetting events per season with no Sentinel-1 look, CONUS cells",8.540756242930572,need_summary.csv,8.5 (old caption rounded to 9)
+c,"look model vs observed at stations: share of 2026 events with a Sentinel-1 look, model",0.36334326011634394,"109 stations, event-weighted",
+c,"same, observed (real Sentinel-1 looks, events_real.csv)",0.3038534428300695,2026 season,
+d,"ARMO mean days between looks (design D, 362 km swath assumed)",1.42,code/06 orbit simulation,1.4 d
+d,"median extra wetting events per season with a look, cropland >= 25 % cells",8.804182410936416,18702 cells,8.8 -> 9
+d all land,"median extra wetting events per season with a look, all CONUS cells",6.267655107323964,83459 cells,6.3
+d all land,"10th / 90th percentile, all CONUS cells",1.1 / 12.2,,
+d all land,share of CONUS cells gaining >= 5 events per season,0.5835320336931906,,

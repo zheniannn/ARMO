@@ -4,7 +4,7 @@ Truth "wetting": a ground-truth wetting event with a look inside its window (the
 Truth "no change": a same-geometry pair whose 5 cm soil moisture changed by < 0.01 m3/m3.
 Detected: the satellite change exceeds 1 sigma of its own no-change noise (the rule used throughout the report).
 Missing retrievals are excluded. Inputs: the pair, sampled-event and summary tables from code/08_sensor_tests.py.
-Output: figures/fig_detection_matrix.png
+Output: figures/figS10_detection_matrix.png
 """
 import os
 import sys
@@ -46,5 +46,5 @@ for ax, (name, pr, col, ev, noise, unit) in zip(axes, cases):
 fig.text(0.5, -0.04, "Rows: ground truth (USCRN). ARMO's requirement: detect ≥ 70 % of wetting events with ≤ 10 % false alarms.",
          ha="center", fontsize=8.5, color=fs.INK2)
 fig.subplots_adjust(wspace=0.45)
-out = os.path.join(FIG, "fig_detection_matrix.png")
+out = os.path.join(FIG, "figS10_detection_matrix.png")
 fig.savefig(out, dpi=250, bbox_inches="tight", pad_inches=0.05); print("saved", out)

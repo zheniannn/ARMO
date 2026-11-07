@@ -1,0 +1,77 @@
+slide,claim,on_slide,recomputed,tolerance,status,source
+4,wetting events,3340.0,3340.0,0.0,MATCH,code/01_events.py events.csv
+4,stations with events,120.0,120.0,0.0,MATCH,events.csv
+4,storm total >= mm,5.0,5.0,0.0,MATCH,code/common.py
+4,wet hour >= mm,0.2,0.2,0.0,MATCH,code/common.py
+4,storms separated by dry hours,24.0,24.0,0.0,MATCH,code/common.py
+4,soil-moisture rise >= m3/m3,0.03,0.03,0.0,MATCH,code/common.py
+4,wet window = share of peak rise,0.5,0.5,0.0,MATCH,code/common.py
+8,median window (days),1.8,1.7917,0.05,MATCH,events.csv
+8,windows shorter than 48 h (%),55.0,54.9701,0.5,MATCH,events.csv
+8,window histogram 0–0.5 d (%),12.5,12.485,0.05,MATCH,events.csv
+8,window histogram 0.5–1 d (%),15.3,15.2695,0.05,MATCH,events.csv
+8,window histogram 1–1.5 d (%),13.4,13.4132,0.05,MATCH,events.csv
+8,window histogram 1.5–2 d (%),13.8,13.8024,0.05,MATCH,events.csv
+8,window histogram 2–2.5 d (%),9.9,9.9401,0.05,MATCH,events.csv
+8,window histogram 2.5–3 d (%),8.2,8.2036,0.05,MATCH,events.csv
+8,window histogram 3–3.5 d (%),5.6,5.5988,0.05,MATCH,events.csv
+8,window histogram 3.5–4 d (%),4.3,4.3114,0.05,MATCH,events.csv
+8,window histogram 4–4.5 d (%),3.6,3.6228,0.05,MATCH,events.csv
+8,window histogram 4.5–5 d (%),2.9,2.9042,0.05,MATCH,events.csv
+8,window histogram 5–5.5 d (%),2.2,2.2156,0.05,MATCH,events.csv
+8,window histogram 5.5–6 d (%),1.7,1.7066,0.05,MATCH,events.csv
+8,window histogram 6–6.5 d (%),1.1,1.1078,0.05,MATCH,events.csv
+8,window histogram 6.5–7 d (%),0.8,0.8084,0.05,MATCH,events.csv
+8,window histogram 7+ d (%),4.6,4.6108,0.05,MATCH,events.csv
+5,first window (h),68.0,68.0,0.5,MATCH,"events_real.csv, WBAN 53926"
+5,second window (h),41.0,41.0,0.5,MATCH,"events_real.csv, WBAN 53926"
+5,NISAR-era wetting events at Stillwater,11.0,11.0,0.0,MATCH,events_real.csv
+5,...sampled by any radar look,5.0,5.0,0.0,MATCH,code/02_real_schedules.py
+5,17 Aug event captured (0 = missed),0.0,0.0,0.0,MATCH,code/02_real_schedules.py
+5,22 Aug event captured (1 = captured),1.0,1.0,0.0,MATCH,code/02_real_schedules.py
+6,"Sentinel-1 ΔVV vs rain, r",0.74,0.737,0.005,MATCH,figures/fig_case_studies.py
+6,high-rain cells ΔVV (dB),0.9,0.8621,0.05,MATCH,figures/fig_case_studies.py
+6,low-rain cells ΔVV (dB),-0.4,-0.3686,0.05,MATCH,figures/fig_case_studies.py
+7,"NISAR ΔHH vs rain, r",0.57,0.569,0.005,MATCH,figures/fig_case_studies.py
+7,high-rain cells ΔHH (dB),2.2,2.1694,0.05,MATCH,figures/fig_case_studies.py
+7,low-rain cells ΔHH (dB),0.5,0.4617,0.05,MATCH,figures/fig_case_studies.py
+10,NISAR-era events,979.0,979.0,0.0,MATCH,events_real.csv
+10,NISAR-era stations,107.0,107.0,0.0,MATCH,events_real.csv
+10,Sentinel-1 capture (%),30.2,30.2349,0.05,MATCH,code/06 performance_headtohead.csv
+10,NISAR capture (%),37.9,37.8958,0.05,MATCH,performance_headtohead.csv
+10,Sentinel-1 + NISAR capture (%),51.6,51.5832,0.05,MATCH,performance_headtohead.csv
+12,fleet + ARMO capture (%),81.5,81.4862,0.05,MATCH,performance_headtohead.csv
+12,ARMO alone (%),76.1,76.0725,0.05,MATCH,performance_headtohead.csv
+12,gain (percentage points),29.9,29.903,0.05,MATCH,code/06 armo_designs.csv
+13,design A: fleet + ARMO capture (%),71.1,71.0674,0.05,MATCH,armo_designs.csv
+13,design A: mean gap between ARMO looks (d),2.8,2.8044,0.05,MATCH,armo_designs.csv
+13,design B: fleet + ARMO capture (%),70.1,70.1481,0.05,MATCH,armo_designs.csv
+13,design B: mean gap between ARMO looks (d),2.8,2.769,0.05,MATCH,armo_designs.csv
+13,design C: fleet + ARMO capture (%),77.2,77.2217,0.05,MATCH,armo_designs.csv
+13,design C: mean gap between ARMO looks (d),1.8,1.7597,0.05,MATCH,armo_designs.csv
+13,design D: fleet + ARMO capture (%),81.5,81.4862,0.05,MATCH,armo_designs.csv
+13,design D: mean gap between ARMO looks (d),1.4,1.4164,0.05,MATCH,armo_designs.csv
+13,design E: fleet + ARMO capture (%),77.4,77.4004,0.05,MATCH,armo_designs.csv
+13,design E: mean gap between ARMO looks (d),1.4,1.398,0.05,MATCH,armo_designs.csv
+13,D over best one-satellite design (points),4.3,4.2646,0.05,MATCH,armo_designs.csv
+18,fleet + ROSE-L 6-day capture (%),63.7,63.6534,0.05,MATCH,performance_headtohead.csv
+18,"SMAP retrieval in windows, all quality (%)",77.0,76.6088,0.5,MATCH,code/08 smap_summary.csv
+18,"SMAP retrieval in windows, recommended (%)",27.0,26.6599,0.5,MATCH,smap_summary.csv
+18,fleet median gap between looks (d),2.0,1.9887,0.05,MATCH,"acq_s1.csv, acq_nisar.csv"
+17,capture at 1-day revisit (%),86.7,86.6766,0.05,MATCH,code/01 capture_synthetic.csv
+17,capture at 2-day revisit (%),72.2,72.1931,0.05,MATCH,code/01 capture_synthetic.csv
+17,capture at 3-day revisit (%),59.5,59.5359,0.05,MATCH,code/01 capture_synthetic.csv
+17,capture at 4-day revisit (%),50.0,49.9663,0.05,MATCH,code/01 capture_synthetic.csv
+17,capture at 5-day revisit (%),42.6,42.6257,0.05,MATCH,code/01 capture_synthetic.csv
+17,capture at 6-day revisit (%),36.9,36.8887,0.05,MATCH,code/01 capture_synthetic.csv
+17,revisit for 80 % capture (d),1.46,1.461,0.005,MATCH,capture_synthetic.csv
+17,...lower bound (d),1.31,1.3053,0.005,MATCH,capture_synthetic.csv
+17,...upper bound (d),1.64,1.6364,0.005,MATCH,capture_synthetic.csv
+11,satellites,2.0,2.0,0.0,MATCH,armo_designs.csv
+11,orbit altitude (km),620.0,620.0,0.0,MATCH,armo_designs.csv
+11,access swath (km),362.0,362.0,0.0,MATCH,armo_designs.csv
+11,radar frequency (GHz),1.26,1.2575,0.005,MATCH,code/06 armo_sizing.csv
+11,reflector diameter (m),5.9,5.9,0.05,MATCH,armo_sizing.csv
+11,wet mass per satellite (kg),316.0,316.1018,0.5,MATCH,code/06 realistic_sizing()
+19,peak RF power (kW),2.8,2.7588,0.05,MATCH,realistic_sizing()
+19,earlier mission estimate (US$ M),149.8,149.7634,0.05,MATCH,code/06 armo_cost.csv
