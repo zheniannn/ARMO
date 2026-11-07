@@ -114,7 +114,7 @@ extra = pd.DataFrame([
      "grey = quality-flagged or no data", "—", "USCRN probe 0.29–0.30 m³/m³ during the passes", "deck slide 9"),
     ("slide05_wetting_windows.png", "Two wetting windows at USCRN Stillwater, Aug 2026", "OBSERVED",
      "figures/fig_wetting_window.py", "uscrn_hourly.pkl, events_real.csv, acq_s1.csv, acq_nisar.csv", "1 station, 2 events",
-     "looks inside windows", "10–29 Aug 2026", "hour-end labels; windows as code/common.py detect_events", "—",
+     "looks inside windows", "10–29 Aug 2026", "hour-end labels; windows as code/common.py detect_events; soil-moisture axis exponential", "—",
      "68 h and 41 h windows; Sentinel-1 looked outside both; NISAR inside the second", "deck slide 5"),
     ("slide14_need_maps_looks_events.png", "Days between Sentinel-1 looks; wetting events per season", "OBSERVED",
      "figures/fig_need_maps_split.py; code/10_gee_need_maps.py", "need_grid.npz, need_stations.csv, events.csv, acq_s1.csv",

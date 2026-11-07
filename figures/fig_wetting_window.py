@@ -1,4 +1,5 @@
 """Slide 5: a real wetting episode between satellite acquisitions (Stillwater 2 W, OK, 10-29 Aug 2026).
+The slide version draws 5 cm soil moisture on an exponential axis (EXP_K) to stretch the wet peaks.
 
 Events are read from data/processed/events_real.csv and re-derived with common.detect_events (asserted identical);
 acquisition times are read from the processed files, not typed in.
@@ -26,6 +27,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 from matplotlib.lines import Line2D
 from matplotlib.patches import Patch
+from matplotlib.ticker import FixedLocator, FuncFormatter, NullLocator
 from common import PROC, load_uscrn, rd, season_series, detect_events, to_hours, captured, FRAC, A_MIN
 
 # deck palette
@@ -37,6 +39,7 @@ plt.rcParams.update({"font.family": "Calibri", "font.size": 15, "axes.edgecolor"
 WBAN, LON = 53926, -97.09
 T0, T1 = pd.Timestamp("2026-08-10", tz="UTC"), pd.Timestamp("2026-08-29", tz="UTC")
 H, HALF = pd.Timedelta(hours=1), pd.Timedelta(minutes=30)
+EXP_K = 9.0   # slide version: soil-moisture axis is exponential, displayed coordinate = exp(EXP_K * soil moisture)
 
 # ------------------------------------------------------------------ data
 u = load_uscrn()
@@ -159,8 +162,12 @@ def draw(ver):
     axr.set_ylim(0, 48); axr.set_yticks([0, 20, 40])
     axr.tick_params(labelbottom=False, labelsize=13)
     axs.plot(raw.index - HALF, raw.sm5, color=INK, lw=2.6, zorder=5)
-    axs.set_ylabel("5 cm soil moisture (m³/m³)", fontsize=14); axs.set_ylim(0.08, 0.375)
-    axs.set_yticks([0.10, 0.15, 0.20, 0.25, 0.30, 0.35]); axs.tick_params(labelsize=13)
+    if not full:   # exponential axis: stretches the wet peaks, compresses the dry baseline
+        axs.set_yscale("function", functions=(lambda y: np.exp(EXP_K * y), lambda z: np.log(np.clip(z, 1e-9, None)) / EXP_K))
+    axs.set_ylabel("5 cm soil moisture (m³/m³)" if full else "5 cm soil moisture (m³/m³, exp)", fontsize=14)
+    axs.set_ylim(0.08, 0.375)
+    axs.yaxis.set_major_locator(FixedLocator([0.10, 0.15, 0.20, 0.25, 0.30, 0.35])); axs.yaxis.set_minor_locator(NullLocator())
+    axs.yaxis.set_major_formatter(FuncFormatter(lambda v, _: f"{v:.2f}")); axs.tick_params(labelsize=13)
     for ax_ in (axr, axs):
         ax_.grid(axis="y", color=LIGHT, lw=0.8); ax_.set_axisbelow(True)
 
@@ -210,8 +217,8 @@ def draw(ver):
         ni_in = inview["NISAR"][(inview["NISAR"] >= a) & (inview["NISAR"] < b)]
         if not full and len(ni_in):   # slide: centre the label between the last NISAR line and the window end, no box
             m = ni_in.iloc[-1] + (b - ni_in.iloc[-1]) / 2
-        axs.text(m, yb + 0.008, f"{e.window_h:.0f} h", ha="center", va="bottom", fontsize=19 if full else 18, color=NAVY,
-                 fontweight="bold", bbox=pbox if full else None, zorder=8)
+        axs.text(m, yb + 0.008 if full else yb - 0.004, f"{e.window_h:.0f} h", ha="center", va="bottom" if full else "top",
+                 fontsize=19 if full else 18, color=NAVY, fontweight="bold", bbox=pbox if full else None, zorder=8)
     if full:
         axs.text(mid1, yb - 0.005, "No radar acquisition\nduring window", ha="center", va="top", fontsize=13.5, color=RED,
                  fontweight="bold", linespacing=1.0, zorder=8)
@@ -256,7 +263,8 @@ def draw(ver):
                Line2D([], [], color=NAVY, marker="|", ls="none", ms=11, mew=2.2, label="SMAP retrieval (9 km radiometer)")]
     if not full:
         handles = [h for h in handles if h.get_label() not in ("Pre-storm baseline", "SMAP retrieval (9 km radiometer)")]
-        axr.set_title("Two wetting windows at NOAA USCRN Stillwater, Oklahoma, August 2026", loc="left", fontsize=18,
+        axr.set_title("Two wetting windows at NOAA USCRN Stillwater, Oklahoma, August 2026 (exponential soil-moisture axis)",
+                      loc="left", fontsize=17,
                       color=INK, fontweight="bold", pad=12)
     fig.legend(handles=handles, loc="lower center", ncol=4 if full else 5, fontsize=12.5, frameon=False, bbox_to_anchor=(0.53, -0.01),
                handlelength=2.2, columnspacing=1.3)

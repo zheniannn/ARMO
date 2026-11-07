@@ -12,8 +12,8 @@ one orbit, raises this to **81.5 %** in simulation.
 window. A *detection* is a captured look whose data show the wetting. This work measures capture.
 
 ![Two wetting windows at Stillwater, Oklahoma](figures/slide05_wetting_windows.png)
-*Two wetting events at USCRN Stillwater, Oklahoma, August 2026. No field-scale radar looked during the first 68-hour
-window; NISAR looked during the second.*
+*Two wetting events at USCRN Stillwater, Oklahoma, August 2026 (soil moisture on an exponential axis, which stretches
+the wet peaks). No field-scale radar looked during the first 68-hour window; NISAR looked during the second.*
 
 ## Key results
 
