@@ -152,5 +152,4 @@ More detail: [docs/METHOD_NOTES.md](docs/METHOD_NOTES.md).
 
 ## Licence
 
-Code: MIT (see `LICENSE`). Data belong to their providers. The code, documents and figures were produced with the help
-of an AI assistant (Claude, Anthropic) under the team's direction.
+Code: MIT (see `LICENSE`). Data belong to their providers.
